@@ -5,12 +5,12 @@ const siteData = {
   "whatsapp": "393894262969",
   "instagram": "https://www.instagram.com/ninocla__fotografo_palermo?igsh=MWE2cm9oYW9naHk1Zw==",
   "featured_photos": [
-    "assets/img/optimized/DSCF1025.webp",
+    "assets/img/optimized/DSCF4420.webp",
     "assets/img/optimized/DSCF1070.webp",
-    "assets/img/optimized/DSCF1110.webp"
+    "assets/img/optimized/DSCF1129.webp"
   ],
   "gallery_photos": [
-    "assets/img/optimized/DSCF1129.webp",
+    "assets/img/optimized/DSCF1110.webp",
     "assets/img/optimized/DSCF1132.webp",
     "assets/img/optimized/DSCF1168.webp",
     "assets/img/optimized/DSCF1196.webp",
@@ -24,7 +24,7 @@ const siteData = {
     "assets/img/optimized/DSCF4264.webp",
     "assets/img/optimized/DSCF4305.webp",
     "assets/img/optimized/DSCF4331.webp",
-    "assets/img/optimized/DSCF4420.webp",
+    "assets/img/optimized/DSCF1025.webp",
     "assets/img/optimized/DSCF7937.webp",
     "assets/img/optimized/DSCF7984.webp",
     "assets/img/optimized/DSCF8018.webp",
