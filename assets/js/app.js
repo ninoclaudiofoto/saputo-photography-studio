@@ -16,7 +16,20 @@ function populateUI(data) {
     document.getElementById('ui-name').textContent = data.name;
     document.title = `${data.name} | Photography`;
     
-    // Popola Navbar e Contatti
+    // Popola Navbar e Contatti Testuali
+    const textEmail = document.getElementById('text-email');
+    if (textEmail) {
+        textEmail.textContent = data.email;
+        textEmail.href = `mailto:${data.email}`;
+    }
+    
+    const textPhone = document.getElementById('text-phone');
+    if (textPhone) {
+        textPhone.textContent = data.phone;
+        textPhone.href = `tel:${data.phone.replace(/\s+/g, '')}`;
+    }
+    
+    // Popola Bottoni Contatti
     const btnMail = document.getElementById('btn-mail');
     btnMail.href = `mailto:${data.email}`;
     
