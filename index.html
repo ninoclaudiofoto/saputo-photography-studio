@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio di Antonino Saputo - Fotografo. Esplora le gallerie, prenota un servizio fotografico o richiedi informazioni.">
+    <title>Antonino Saputo | Photography</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <!-- Navigazione -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="#" class="logo" id="ui-name">Antonino Saputo</a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#gallery">Portfolio</a></li>
+                    <li><a href="#contact">Contatti</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sezione in Evidenza -->
+        <section class="hero" id="hero">
+            <div class="container">
+                <div class="hero-grid" id="featured-grid">
+                    <!-- Javascript inietterà qui le foto in evidenza -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Galleria Completa -->
+        <section class="gallery-section" id="gallery">
+            <div class="container">
+                <h2 class="section-title">Latest Works</h2>
+                <div class="masonry-grid" id="gallery-grid">
+                    <!-- Javascript inietterà qui le foto della galleria -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contatti -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <h2 class="section-title">Get in Touch</h2>
+                    <p class="contact-subtitle">Per informazioni o per prenotare un servizio fotografico, non esitare a contattarmi.</p>
+                    
+                    <div class="contact-buttons">
+                        <a href="#" class="btn btn-primary" id="btn-mail">
+                            <span class="icon">✉️</span> Scrivimi una Mail
+                        </a>
+                        <a href="#" class="btn btn-whatsapp" id="btn-whatsapp">
+                            <span class="icon">💬</span> Messaggio WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; <span id="current-year"></span> Antonino Saputo. Tutti i diritti riservati.</p>
+            <div class="social-links">
+                <a href="#" id="link-instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- App Scripts -->
+    <script src="data.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
