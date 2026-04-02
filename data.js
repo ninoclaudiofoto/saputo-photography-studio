@@ -1,5 +1,7 @@
 const siteData = {
   "name": "Antonino Saputo",
+  "tab_title": "Antonino Saputo | Fotografo Professionista a Palermo", // titolo visualizzato sulla scheda del browser (mantieni le parole fotografo e palermo per indicizzazione)
+  "main_title": "Antonino Saputo | Fotografo", // titolo visualizzato in alto sulla pagina
   "email": "sapunino08@gmail.com",
   "phone": "+39 389 426 2969",
   "whatsapp": "393894262969",
