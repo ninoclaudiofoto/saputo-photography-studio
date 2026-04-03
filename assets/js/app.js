@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageContext = document.body?.dataset?.page || 'home';
 
   if (typeof siteData !== 'undefined') {
+    initPortfolioDropdown(siteData);
     populateUI(siteData, pageContext);
     initScrollReveal();
     initLightboxEvents();
@@ -43,6 +44,53 @@ function populateUI(data, pageContext) {
 
   renderHeroSection(highlightPhotos);
   renderGallerySection(recentWorkPhotos, 'Recent Works');
+}
+
+function initPortfolioDropdown(data) {
+  const menu = document.getElementById('nav-portfolio-menu');
+  const dropdown = menu?.closest('.nav-dropdown');
+  const toggle = dropdown?.querySelector('.nav-dropdown-toggle');
+  if (!menu || !dropdown || !toggle) return;
+
+  menu.innerHTML = '';
+
+  const baseItem = document.createElement('li');
+  const baseLink = document.createElement('a');
+  baseLink.href = 'portfolio.html';
+  baseLink.textContent = 'Tutte le categorie';
+  baseItem.appendChild(baseLink);
+  menu.appendChild(baseItem);
+
+  (data.portfolio_categories || []).forEach((category) => {
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `portfolio.html#category-${category.slug}`;
+    link.textContent = category.title;
+    li.appendChild(link);
+    menu.appendChild(li);
+  });
+
+  const closeDropdown = () => {
+    dropdown.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle.addEventListener('click', (event) => {
+    event.preventDefault();
+    const isOpen = dropdown.classList.contains('open');
+    if (isOpen) {
+      closeDropdown();
+    } else {
+      dropdown.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!dropdown.contains(event.target)) {
+      closeDropdown();
+    }
+  });
 }
 
 function setBaseSiteInfo(data, pageContext) {
