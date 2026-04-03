@@ -35,11 +35,14 @@ function populateUI(data, pageContext) {
 
   if (pageContext === 'portfolio') {
     renderPortfolioCategories(data.portfolio_categories || []);
-  } else {
-    renderHeroSection(data.featured_photos || []);
-    const homePhotos = data.home_photos || [];
-    renderGallerySection(homePhotos);
+    return;
   }
+
+  const highlightPhotos = data.home_highlights || data.featured_photos || [];
+  const recentWorkPhotos = data.home_recent_works || data.home_photos || [];
+
+  renderHeroSection(highlightPhotos);
+  renderGallerySection(recentWorkPhotos, 'Recent Works');
 }
 
 function setBaseSiteInfo(data, pageContext) {
@@ -93,7 +96,7 @@ function renderHeroSection(photos) {
   });
 }
 
-function renderGallerySection(photos) {
+function renderGallerySection(photos, label) {
   const galleryGrid = document.getElementById('gallery-grid');
   if (!galleryGrid) return;
 
@@ -103,7 +106,8 @@ function renderGallerySection(photos) {
   }
 
   photos.forEach((photoPath, index) => {
-    const item = createGalleryItem(photoPath, `Fotografia portfolio ${index + 1}`, photos, index);
+    const alt = label ? `${label} ${index + 1}` : `Fotografia portfolio ${index + 1}`;
+    const item = createGalleryItem(photoPath, alt, photos, index);
     galleryGrid.appendChild(item);
   });
 }

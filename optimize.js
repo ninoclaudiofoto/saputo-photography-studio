@@ -6,6 +6,8 @@ const vm = require('vm');
 
 const ROOT_DIR = __dirname;
 const HOME_DIR = path.join(ROOT_DIR, 'assets', 'img', 'home');
+const HOME_HIGHLIGHTS_DIR = path.join(HOME_DIR, 'highlights');
+const HOME_RECENT_DIR = path.join(HOME_DIR, 'recent-works');
 const CATEGORIES_DIR = path.join(ROOT_DIR, 'assets', 'img', 'categories');
 const DATA_FILE = path.join(ROOT_DIR, 'data.js');
 
@@ -14,21 +16,31 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
 
 (async function main() {
   try {
-    await Promise.all([ensureDirectory(HOME_DIR), ensureDirectory(CATEGORIES_DIR)]);
+    await Promise.all([
+      ensureDirectory(HOME_DIR),
+      ensureDirectory(HOME_HIGHLIGHTS_DIR),
+      ensureDirectory(HOME_RECENT_DIR),
+      ensureDirectory(CATEGORIES_DIR)
+    ]);
 
-    console.log('🔧 Ottimizzazione immagini in home/');
-    const homePhotos = await processFlatDirectory(HOME_DIR);
-    console.log(`  → ${homePhotos.length} foto pronte per l'homepage.`);
+    console.log('>> Ottimizzazione home/highlights');
+    const highlightPhotos = await processFlatDirectory(HOME_HIGHLIGHTS_DIR);
+    console.log(`   -> ${highlightPhotos.length} foto per la hero.`);
 
-    console.log('🗂️  Scansione categorie portfolio...');
+    console.log('>> Ottimizzazione home/recent-works');
+    const recentWorkPhotos = await processFlatDirectory(HOME_RECENT_DIR);
+    console.log(`   -> ${recentWorkPhotos.length} foto Recent Works.`);
+
+    console.log('>> Scansione categorie portfolio');
     const portfolioCategories = await buildPortfolioCategories();
-    console.log(`  → ${portfolioCategories.length} categorie aggiornate.`);
+    console.log(`   -> ${portfolioCategories.length} categorie aggiornate.`);
 
     await updateDataFile({
-      home_photos: homePhotos,
+      home_highlights: highlightPhotos,
+      home_recent_works: recentWorkPhotos,
       portfolio_categories: portfolioCategories
     });
-    console.log('✅ Completato! data.js aggiornato con le categorie trovate.');
+    console.log('✅ Completato! data.js aggiornato con highlights, recent works e categorie.');
   } catch (error) {
     console.error('❌ Errore durante l\'ottimizzazione:', error);
     process.exitCode = 1;
