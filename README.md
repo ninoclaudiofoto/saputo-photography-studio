@@ -33,6 +33,15 @@ Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di o
 
 ---
 
+## Script rapidi
+
+- **Windows**: esegui `run-optimize.bat`. Il file prova a installare automaticamente Node.js tramite Winget o Chocolatey se non presente, quindi lancia `node optimize.js`.
+- **macOS / Linux**: esegui `./run-optimize.sh`. Lo script tenta di installare Node.js usando Homebrew, apt, dnf, yum o pacman prima di avviare `node optimize.js`.
+
+Se l'installazione automatica non è possibile, lo script fornirà le istruzioni per completarla manualmente.
+
+---
+
 ## Navigazione
 
 - La homepage ora mostra “Highlights” + “Recent Works” e rimanda, dal menu, alla pagina portfolio dedicata.
