@@ -13,12 +13,13 @@ node optimize.js
 if errorlevel 1 (
     echo.
     echo [ERROR] Impossibile completare optimize.js
-    goto end
+    goto pause
 )
 
 echo.
 echo [OK] optimize.js completato con successo.
-goto end
+call :maybe_git_push
+goto pause
 
 :ensure_node
 where node >NUL 2>&1 && (
@@ -49,6 +50,53 @@ where node >NUL 2>&1 && (
 
 echo Sembra che Node.js non sia ancora disponibile. Chiudi e riapri il terminale, quindi rilancia lo script.
 exit /b 1
+
+:maybe_git_push
+set "response="
+set /p "response=Vuoi eseguire git add/commit/push? (y/N): "
+if /I not "%response%"=="y" (
+    echo Operazione git ignorata.
+    exit /b 0
+)
+call :git_push
+exit /b 0
+
+:git_push
+for /f %%b in ('git rev-parse --abbrev-ref HEAD 2^>NUL') do set "CURRENT_BRANCH=%%b"
+if "%CURRENT_BRANCH%"=="" (
+    echo [ERROR] Non sembra un repo Git o non riesco a leggere il branch corrente.
+    exit /b 1
+)
+
+set "commit_msg="
+set /p "commit_msg=Commit message (default: chore: update media): "
+if "%commit_msg%"=="" set "commit_msg=chore: update media"
+
+echo.
+echo Eseguo git add -A ...
+git add -A || (
+    echo [ERROR] git add fallito.
+    exit /b 1
+)
+
+echo Commit: %commit_msg%
+git commit -m "%commit_msg%" || (
+    echo [ERROR] git commit fallito (forse nessuna modifica?).
+    exit /b 1
+)
+
+echo Push su %CURRENT_BRANCH% ...
+git push origin %CURRENT_BRANCH% || (
+    echo [ERROR] git push fallito.
+    exit /b 1
+)
+
+echo Git push completato con successo.
+exit /b 0
+
+:pause
+echo.
+pause
 
 :end
 popd >NUL

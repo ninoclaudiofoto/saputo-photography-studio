@@ -36,6 +36,21 @@ const siteGenerated = {
   ],
   "portfolio_categories": [
     {
+      "slug": "cacchina",
+      "title": "Cacchina",
+      "cover": "assets/img/categories/cacchina/DSCF4264.webp",
+      "photos": [
+        "assets/img/categories/cacchina/DSCF4264.webp",
+        "assets/img/categories/cacchina/DSCF4305.webp",
+        "assets/img/categories/cacchina/DSCF4331.webp",
+        "assets/img/categories/cacchina/DSCF7937.webp",
+        "assets/img/categories/cacchina/DSCF9294.webp",
+        "assets/img/categories/cacchina/DSCF9454.webp",
+        "assets/img/categories/cacchina/DSCF9585.webp",
+        "assets/img/categories/cacchina/DSCF9848.webp"
+      ]
+    },
+    {
       "slug": "matrimoni",
       "title": "Matrimoni",
       "cover": "assets/img/categories/matrimoni/DSCF1110.webp",
