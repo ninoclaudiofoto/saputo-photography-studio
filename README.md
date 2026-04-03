@@ -4,13 +4,13 @@ Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categor
 
 ## Modificare i contenuti
 
-- **`content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti, link social e il blocco `portfolio_intro` (tagline e descrizione della hero di `portfolio.html`). Non viene toccato dallo script.
-- **`data.js`**: file generato automaticamente da `optimize.js` (non modificarlo a mano). Contiene soltanto i dati dinamici letti dalle cartelle immagini:
+- **`config/site-content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti, link social e il blocco `portfolio_intro` (tagline e descrizione della hero di `portfolio.html`). Non viene toccato dallo script.
+- **`config/site-data.js`**: file generato automaticamente da `optimize.js` (non modificarlo a mano). Contiene soltanto i dati dinamici letti dalle cartelle immagini:
   - `home_highlights` → immagini in `assets/img/home/highlights/`.
   - `home_recent_works` → immagini in `assets/img/home/recent-works/`.
   - `portfolio_categories` → cartelle trovate in `assets/img/categories/<nome>/`.
 
-Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di ottimizzazione.
+Ricorda di commitare `config/site-data.js` dopo ogni modifica o esecuzione dello script di ottimizzazione.
 
 ---
 
@@ -27,12 +27,12 @@ Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di o
 1. Copia le nuove foto (JPG/PNG) nella cartella corretta (`home/highlights`, `home/recent-works` o `categories/<categoria>/`). Se la cartella non esiste, creala.
 2. Esegui `node optimize.js` dalla root del progetto:
    - converte le immagini in WebP sovrascrivendo i file originali;
-   - aggiorna automaticamente `data.js` con `home_highlights`, `home_recent_works` e `portfolio_categories`.
+   - aggiorna automaticamente `config/site-data.js` con `home_highlights`, `home_recent_works` e `portfolio_categories`.
 3. Verifica il risultato (preview locale o GitHub Pages), poi effettua commit e push.
 
 > **Nota**: se preferisci caricare solo WebP già ottimizzate, puoi inserirle direttamente nelle cartelle. Mantieni però la convenzione di rilanciare `node optimize.js` così da ricostruire i dati (o aggiorna manualmente `home_highlights` se vuoi forzare un ordine specifico).
 
-Le modifiche puramente testuali (nome, contatti, hero del portfolio) si applicano semplicemente salvando `content.js`: non serve rilanciare lo script.
+Le modifiche puramente testuali (nome, contatti, hero del portfolio) si applicano semplicemente salvando `config/site-content.js`: non serve rilanciare lo script.
 
 ---
 

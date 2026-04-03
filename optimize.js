@@ -8,7 +8,7 @@ const HOME_DIR = path.join(ROOT_DIR, 'assets', 'img', 'home');
 const HOME_HIGHLIGHTS_DIR = path.join(HOME_DIR, 'highlights');
 const HOME_RECENT_DIR = path.join(HOME_DIR, 'recent-works');
 const CATEGORIES_DIR = path.join(ROOT_DIR, 'assets', 'img', 'categories');
-const DATA_FILE = path.join(ROOT_DIR, 'data.js');
+const DATA_FILE = path.join(ROOT_DIR, 'config', 'site-data.js');
 
 const SOURCE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png']);
 const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
