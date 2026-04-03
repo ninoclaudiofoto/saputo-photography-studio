@@ -1,7 +1,7 @@
 const siteContent = {
   name: "Antonino Saputo",
-  tab_title: "Antonino Saputo | Fotografo Professionista a Palermo",
-  main_title: "Antonino Saputo | Fotografo",
+  tab_title: "Nino Claudio Saputo | Fotografo Professionista a Palermo",
+  main_title: "Nino Claudio Saputo | Fotografo",
   email: "sapunino08@gmail.com",
   phone: "+39 389 426 2969",
   whatsapp: "393894262969",
