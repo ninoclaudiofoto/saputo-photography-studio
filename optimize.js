@@ -1,42 +1,145 @@
-const sharp = require('sharp');
 const fs = require('fs');
+const fsp = fs.promises;
 const path = require('path');
+const sharp = require('sharp');
+const vm = require('vm');
 
-const inputDir = path.join(__dirname, 'assets', 'img', 'original');
-const outputDir = path.join(__dirname, 'assets', 'img', 'optimized');
+const ROOT_DIR = __dirname;
+const HOME_DIR = path.join(ROOT_DIR, 'assets', 'img', 'home');
+const CATEGORIES_DIR = path.join(ROOT_DIR, 'assets', 'img', 'categories');
+const DATA_FILE = path.join(ROOT_DIR, 'data.js');
 
+const SOURCE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png']);
+const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
 
-if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+(async function main() {
+  try {
+    await Promise.all([ensureDirectory(HOME_DIR), ensureDirectory(CATEGORIES_DIR)]);
+
+    console.log('🔧 Ottimizzazione immagini in home/');
+    const homePhotos = await processFlatDirectory(HOME_DIR);
+    console.log(`  → ${homePhotos.length} foto pronte per l'homepage.`);
+
+    console.log('🗂️  Scansione categorie portfolio...');
+    const portfolioCategories = await buildPortfolioCategories();
+    console.log(`  → ${portfolioCategories.length} categorie aggiornate.`);
+
+    await updateDataFile({
+      home_photos: homePhotos,
+      portfolio_categories: portfolioCategories
+    });
+    console.log('✅ Completato! data.js aggiornato con le categorie trovate.');
+  } catch (error) {
+    console.error('❌ Errore durante l\'ottimizzazione:', error);
+    process.exitCode = 1;
+  }
+})();
+
+async function ensureDirectory(dirPath) {
+  await fsp.mkdir(dirPath, { recursive: true });
 }
 
-fs.readdir(inputDir, (err, files) => {
-    if (err) {
-        console.error("Could not list the directory.", err);
-        process.exit(1);
-    }
+async function processFlatDirectory(dirPath) {
+  const entries = await safeReadDir(dirPath);
+  const files = [];
 
-    files.forEach(file => {
-        if (!file.match(/\.(jpg|jpeg|png)$/i)) return;
+  for (const entry of entries) {
+    if (!entry.isFile()) continue;
+    const fullPath = path.join(dirPath, entry.name);
+    const normalized = await normalizeImage(fullPath);
+    if (normalized) files.push(toWebPath(normalized));
+  }
 
-        const inputPath = path.join(inputDir, file);
-        const outputPath = path.join(outputDir, file.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+  return files.sort();
+}
 
-        console.log(`Optimizing ${file}...`);
+async function buildPortfolioCategories() {
+  const entries = await safeReadDir(CATEGORIES_DIR);
+  const categories = [];
 
-        sharp(inputPath)
-            .resize({
-                width: 1920,
-                withoutEnlargement: true,
-                fit: sharp.fit.inside,
-            })
-            .webp({ quality: 80 })
-            .toFile(outputPath)
-            .then(info => {
-                console.log(`Successfully optimized: ${file} -> size: ${(info.size / 1024).toFixed(2)} KB`);
-            })
-            .catch(err => {
-                console.error(`Error processing ${file}:`, err);
-            });
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+    const slug = entry.name;
+    const categoryDir = path.join(CATEGORIES_DIR, slug);
+    const photoPaths = await processFlatDirectory(categoryDir);
+
+    if (photoPaths.length === 0) continue;
+
+    categories.push({
+      slug,
+      title: humanize(slug),
+      cover: photoPaths[0],
+      photos: photoPaths
     });
-});
+  }
+
+  return categories.sort((a, b) => a.title.localeCompare(b.title, 'it', { sensitivity: 'base' }));
+}
+
+async function normalizeImage(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  if (!SUPPORTED_EXTENSIONS.has(ext)) return null;
+
+  if (SOURCE_EXTENSIONS.has(ext)) {
+    const outputPath = replaceExtension(filePath, '.webp');
+    await sharp(filePath)
+      .resize({ width: 1920, withoutEnlargement: true, fit: sharp.fit.inside })
+      .webp({ quality: 80 })
+      .toFile(outputPath);
+
+    await fsp.unlink(filePath);
+    return outputPath;
+  }
+
+  return filePath;
+}
+
+function replaceExtension(filePath, newExt) {
+  return filePath.slice(0, -path.extname(filePath).length) + newExt;
+}
+
+async function safeReadDir(dirPath) {
+  try {
+    return await fsp.readdir(dirPath, { withFileTypes: true });
+  } catch (error) {
+    console.warn(`Attenzione: impossibile leggere ${dirPath}.`, error.message);
+    return [];
+  }
+}
+
+function humanize(slug) {
+  return slug
+    .split(/[-_]/g)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ');
+}
+
+function toWebPath(absolutePath) {
+  const relative = path.relative(ROOT_DIR, absolutePath);
+  return relative.split(path.sep).join('/');
+}
+
+async function updateDataFile(partialData) {
+  const current = await loadSiteData();
+  const nextData = { ...current, ...partialData };
+  const serialized = [
+    'const siteData = ',
+    JSON.stringify(nextData, null, 2),
+    ';\n'
+  ].join('');
+
+  await fsp.writeFile(DATA_FILE, serialized, 'utf8');
+}
+
+async function loadSiteData() {
+  const raw = await fsp.readFile(DATA_FILE, 'utf8');
+  const script = new vm.Script(`${raw}\nsiteData;`, { filename: 'data.js' });
+  const context = {};
+  const result = script.runInNewContext(context);
+
+  if (!result || typeof result !== 'object') {
+    throw new Error('Impossibile estrarre siteData da data.js');
+  }
+
+  return result;
+}

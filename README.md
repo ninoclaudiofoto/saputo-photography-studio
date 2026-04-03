@@ -1,34 +1,38 @@
 # Portfolio Antonino Saputo
 
-Sito web vetrina di Antonino Saputo.
+Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categorie (`portfolio.html`).
 
 ## Modificare i contenuti
 
-Tutti i testi e i link alle foto del sito sono centralizzati nel file **`data.js`**. 
-Per aggiornare il sito è sufficiente modificare questo file direttamente da GitHub.
+- Tutti i testi e i link sono centralizzati in **`data.js`**.
+- I campi `featured_photos` e `gallery_photos` puntano a file dentro `assets/img/home/`.
+- La chiave `portfolio_categories` viene generata automaticamente dallo script `optimize.js` e non va modificata a mano.
 
-1. Apri **`data.js`** su GitHub.
-2. Modifica i campi necessari (le informazioni di contatto sono autoesplicative).
-3. Le foto sono divise in due sezioni:
-    - `"featured_photos"`: Le foto grandi mostrate nella sezione in evidenza iniziale.
-    - `"gallery_photos"`: Tutte le restanti foto caricate nella galleria a griglia.
-4. Salva (Commit) il file. Le modifiche saranno online pochi secondi dopo.
+Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di ottimizzazione.
 
 ---
 
-## Gestione ed Aggiunta Nuove Foto
+## Struttura immagini
 
-Per garantire il caricamento fluido della galleria, è opportuno che le foto vengano alleggerite prima di essere pubblicate (peso consigliato < 500KB o dimensione max ~1920px). Ci sono due opzioni per farlo:
+- `assets/img/home/`: foto in evidenza + galleria della homepage.
+- `assets/img/categories/<nome-categoria>/`: raccolte tematiche mostrate su `portfolio.html` (es: `matrimoni`, `ritratti`, ...). Ogni cartella diventa una sezione autonoma.
 
-### Opzione 1: Caricamento Autonomo da GitHub
-Se preferisci gestire le foto dal browser:
-1. Esporta le foto già compresse ad es. da Lightroom con qualità standard ed esportazione Web, oppure comprimile online tramite siti gratuiti come [Squoosh](https://squoosh.app/) o [TinyPNG](https://tinypng.com/).
-2. Entra in `assets/img/optimized/` e carica qui i file.
-3. Aggiungi il nuovo percorso (es: `"assets/img/optimized/nuovafoto.jpg"`) all'interno di `data.js`.
+---
 
-### Opzione 2: Uso dello Script Locale (Per sviluppatori/webmaster)
-Se gestisci i file in locale tramite il tool Node.js preconfigurato:
-1. Inserisci le foto originali pesanti nella cartella `assets/img/original/`.
-2. Apri il terminale alla root del progetto e lancia lo script `node optimize.js`.
-3. Lo script convertirà tutto in formato WebP, piazzandolo in `assets/img/optimized/`.
-4. Aggiorna `data.js` per puntare ai file generati e fai il push su git.
+## Workflow consigliato per nuove foto
+
+1. Copia le nuove foto (JPG/PNG) nella cartella corretta (`home/` oppure `categories/<categoria>/`). Se la cartella non esiste, creala.
+2. Esegui `node optimize.js` dalla root del progetto:
+   - converte le immagini in WebP sovrascrivendo i file originali;
+   - aggiorna automaticamente `data.js` con la struttura delle categorie.
+3. Verifica il risultato (preview locale o GitHub Pages), poi effettua commit e push.
+
+> **Nota**: se preferisci caricare solo WebP già ottimizzate, puoi inserirle direttamente nelle cartelle e aggiornare manualmente `featured_photos`/`gallery_photos`. Per le categorie è comunque consigliato eseguire `node optimize.js` così da rigenerare `portfolio_categories`.
+
+---
+
+## Navigazione
+
+- La homepage mette in evidenza i lavori principali e rimanda alla pagina portfolio.
+- `portfolio.html` costruisce dinamicamente una sezione per ogni cartella trovata in `assets/img/categories/`.
+- Entrambe le pagine condividono lo stesso header/nav e la stessa sezione contatti (aggiornata tramite `data.js`).

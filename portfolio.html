@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Portfolio di Antonino Saputo - Fotografo. Esplora le gallerie, prenota un servizio fotografico o richiedi informazioni.">
-    <title>Antonino Saputo | Fotografo Professionista a Palermo</title> <!-- Populated by JS -->
-    <!-- Fonts & Performance -->
+        content="Portfolio categorie di Antonino Saputo - Fotografo. Esplora raccolte tematiche di matrimoni, ritratti e servizi fotografici su misura.">
+    <title>Antonino Saputo | Portfolio Fotografico</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style"
@@ -20,21 +19,17 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
             rel="stylesheet">
     </noscript>
-
-    <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body data-page="home">
-
-    <!-- Navigazione -->
+<body data-page="portfolio">
     <header class="header">
         <div class="container header-content">
-            <a href="index.html#hero" class="logo" id="ui-name">Antonino Saputo | Fotografo</a> <!-- Populated by JS -->
+            <a href="index.html#hero" class="logo" id="ui-name">Antonino Saputo | Fotografo</a>
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="index.html#hero">Home</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="portfolio.html" aria-current="page">Portfolio</a></li>
                     <li><a href="#contact">Contatti</a></li>
                 </ul>
             </nav>
@@ -42,33 +37,33 @@
     </header>
 
     <main>
-        <!-- Sezione in Evidenza -->
-        <section class="hero" id="hero">
+        <section class="hero hero--portfolio" id="hero">
             <div class="container">
-                <div class="hero-grid" id="featured-grid">
-                    <!-- Javascript inietterà qui le foto in evidenza -->
+                <div class="hero-grid">
+                    <div class="hero-copy">
+                        <p class="section-subtitle">Portfolio Categorie</p>
+                        <h1 class="section-title">Storie visive dedicate</h1>
+                        <p>Ogni categoria raccoglie set fotografici con uno stile e un racconto specifico. Scegli la
+                            tematica per esplorare griglie complete in alta qualità.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Galleria Completa -->
-        <section class="gallery-section" id="gallery">
-            <div class="container">
-                <h2 class="section-title">Portfolio</h2>
-                <p class="section-subtitle">A selection of recent works</p>
-                <div class="masonry-grid" id="gallery-grid">
-                    <!-- Javascript inietterà qui le foto della galleria -->
+        <div id="portfolio-categories">
+            <section class="gallery-section">
+                <div class="container">
+                    <p class="section-subtitle">Caricamento delle categorie in corso...</p>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Contatti -->
         <section class="contact-section" id="contact">
             <div class="container">
                 <div class="contact-content">
-                    <h2 class="section-title">Get in Touch</h2>
-                    <p class="contact-subtitle">Per informazioni o per prenotare un servizio fotografico, non esitare a
-                        contattarmi.</p>
+                    <h2 class="section-title">Richiedi il tuo servizio</h2>
+                    <p class="contact-subtitle">Scrivimi per fissare un appuntamento o per disegnare un progetto su
+                        misura.</p>
 
                     <div class="contact-info" style="margin-bottom: 2rem; font-size: 1.1rem;">
                         <p style="margin-bottom: 0.5rem;"><strong style="font-weight:600;">Email:</strong> <a href="#"
@@ -89,7 +84,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container footer-content">
             <p>&copy; <span id="current-year"></span> Antonino Saputo. Tutti i diritti riservati.</p>
@@ -117,7 +111,6 @@
         </div>
     </footer>
 
-    <!-- Lightbox Modal -->
     <div id="lightbox" class="lightbox">
         <span class="lightbox-close">&times;</span>
         <button class="lightbox-prev" aria-label="Foto precedente">&#10094;</button>
@@ -125,7 +118,6 @@
         <img class="lightbox-content" id="lightbox-img" alt="Immagine ingrandita">
     </div>
 
-    <!-- App Scripts -->
     <script src="data.js"></script>
     <script src="assets/js/app.js"></script>
 </body>

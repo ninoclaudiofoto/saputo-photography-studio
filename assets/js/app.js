@@ -1,199 +1,278 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Anno Corrente Footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+  const currentYearEl = document.getElementById('current-year');
+  if (currentYearEl) {
+    currentYearEl.textContent = new Date().getFullYear();
+  }
 
-    // Effetto Scroll Header (Glassmorphism dinamico)
-    const header = document.querySelector('.header');
+  const header = document.querySelector('.header');
+  if (header) {
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
     });
+  }
 
-    if (typeof siteData !== 'undefined') {
-        populateUI(siteData);
-        initScrollReveal();
-        initLightboxEvents();
-    } else {
-        console.error('Errore: dati non trovati');
-        const grid = document.getElementById('gallery-grid');
-        if(grid) grid.innerHTML = '<p>Si è verificato un errore nel caricamento del portfolio.</p>';
+  const pageContext = document.body?.dataset?.page || 'home';
+
+  if (typeof siteData !== 'undefined') {
+    populateUI(siteData, pageContext);
+    initScrollReveal();
+    initLightboxEvents();
+  } else {
+    console.error('Errore: dati non trovati');
+    const galleryRoot = document.getElementById('gallery-grid') || document.getElementById('portfolio-categories');
+    if (galleryRoot) {
+      galleryRoot.innerHTML = '<p>Si è verificato un errore nel caricamento del portfolio.</p>';
     }
+  }
 });
 
-function populateUI(data) {
-    // Info di base
-    const uiName = document.getElementById('ui-name');
-    if(uiName) uiName.textContent = data.main_title;
-    document.title = data.tab_title;
+function populateUI(data, pageContext) {
+  setBaseSiteInfo(data, pageContext);
 
-    // Contatti
-    const textEmail = document.getElementById('text-email');
-    if (textEmail) {
-        textEmail.textContent = data.email;
-        textEmail.href = `mailto:${data.email}`;
-    }
-
-    const textPhone = document.getElementById('text-phone');
-    if (textPhone) {
-        textPhone.textContent = data.phone;
-        textPhone.href = `tel:${data.phone.replace(/\s+/g, '')}`;
-    }
-
-    const btnMail = document.getElementById('btn-mail');
-    if(btnMail) btnMail.href = `mailto:${data.email}`;
-
-    const btnWhatsapp = document.getElementById('btn-whatsapp');
-    if(btnWhatsapp) btnWhatsapp.href = `https://wa.me/${data.whatsapp}`;
-
-    const linkInsta = document.getElementById('link-instagram');
-    if(linkInsta) linkInsta.href = data.instagram;
-
-    // Foto In Evidenza (Hero Section)
-    const featuredGrid = document.getElementById('featured-grid');
-    if (featuredGrid && data.featured_photos && data.featured_photos.length > 0) {
-        // Mostriamo al massimo le prime 3 per le griglia di design
-        data.featured_photos.slice(0, 3).forEach(photoPath => {
-            const item = document.createElement('div');
-            item.className = 'hero-item reveal'; // Classe reveal per l'animazione scroll
-
-            const img = document.createElement('img');
-            img.src = photoPath;
-            img.alt = 'Foto in evidenza';
-            img.loading = 'eager'; // Importante per l'above-the-fold
-
-            item.appendChild(img);
-            featuredGrid.appendChild(item);
-        });
-    }
-
-    // Galleria Fotografica
-    const galleryGrid = document.getElementById('gallery-grid');
-    if (galleryGrid && data.gallery_photos && data.gallery_photos.length > 0) {
-        data.gallery_photos.forEach((photoPath, index) => {
-            const item = document.createElement('div');
-            item.className = 'gallery-item reveal'; // Classe reveal
-            
-            const img = document.createElement('img');
-            img.src = photoPath;
-            img.alt = `Fotografia portfolio ${index + 1}`;
-            img.loading = 'lazy'; // Lazy load per performance
-
-            // Apertura Lightbox al click
-            item.addEventListener('click', () => {
-                openLightbox(index, data.gallery_photos);
-            });
-
-            item.appendChild(img);
-            galleryGrid.appendChild(item);
-        });
-    } else if (galleryGrid) {
-        galleryGrid.innerHTML = '<p>Nuove foto in arrivo.</p>';
-    }
+  if (pageContext === 'portfolio') {
+    renderPortfolioCategories(data.portfolio_categories || []);
+  } else {
+    renderHeroSection(data.featured_photos || []);
+    renderGallerySection(data.gallery_photos || []);
+  }
 }
 
-// ==========================================
-// SCROLL REVEAL ANIMATION
-// ==========================================
+function setBaseSiteInfo(data, pageContext) {
+  document.title = pageContext === 'portfolio' ? `${data.tab_title} | Portfolio` : data.tab_title;
+
+  const uiName = document.getElementById('ui-name');
+  if (uiName) uiName.textContent = data.main_title;
+
+  const textEmail = document.getElementById('text-email');
+  if (textEmail) {
+    textEmail.textContent = data.email;
+    textEmail.href = `mailto:${data.email}`;
+  }
+
+  const textPhone = document.getElementById('text-phone');
+  if (textPhone) {
+    textPhone.textContent = data.phone;
+    textPhone.href = `tel:${data.phone.replace(/\s+/g, '')}`;
+  }
+
+  const btnMail = document.getElementById('btn-mail');
+  if (btnMail) btnMail.href = `mailto:${data.email}`;
+
+  const btnWhatsapp = document.getElementById('btn-whatsapp');
+  if (btnWhatsapp) btnWhatsapp.href = `https://wa.me/${data.whatsapp}`;
+
+  const linkInsta = document.getElementById('link-instagram');
+  if (linkInsta) linkInsta.href = data.instagram;
+}
+
+function renderHeroSection(photos) {
+  const featuredGrid = document.getElementById('featured-grid');
+  if (!featuredGrid) return;
+
+  if (!photos.length) {
+    featuredGrid.innerHTML = '<p>Nuove foto in arrivo.</p>';
+    return;
+  }
+
+  photos.slice(0, 3).forEach((photoPath) => {
+    const item = document.createElement('div');
+    item.className = 'hero-item reveal';
+
+    const img = document.createElement('img');
+    img.src = photoPath;
+    img.alt = 'Foto in evidenza';
+    img.loading = 'eager';
+
+    item.appendChild(img);
+    featuredGrid.appendChild(item);
+  });
+}
+
+function renderGallerySection(photos) {
+  const galleryGrid = document.getElementById('gallery-grid');
+  if (!galleryGrid) return;
+
+  if (!photos.length) {
+    galleryGrid.innerHTML = '<p>Nuove foto in arrivo.</p>';
+    return;
+  }
+
+  photos.forEach((photoPath, index) => {
+    const item = createGalleryItem(photoPath, `Fotografia portfolio ${index + 1}`, photos, index);
+    galleryGrid.appendChild(item);
+  });
+}
+
+function renderPortfolioCategories(categories) {
+  const container = document.getElementById('portfolio-categories');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!categories.length) {
+    container.innerHTML = '<p>Non sono state trovate categorie. Aggiungi nuove cartelle in assets/img/categories e rilancia lo script di ottimizzazione.</p>';
+    return;
+  }
+
+  categories.forEach((category) => {
+    const section = document.createElement('section');
+    section.className = 'gallery-section reveal';
+    section.id = `category-${category.slug}`;
+
+    const inner = document.createElement('div');
+    inner.className = 'container';
+
+    const header = document.createElement('div');
+    header.className = 'portfolio-category-header';
+
+    const title = document.createElement('h2');
+    title.className = 'section-title';
+    title.textContent = category.title;
+
+    const subtitle = document.createElement('p');
+    subtitle.className = 'section-subtitle';
+    subtitle.textContent = `${category.photos.length} ${pluralize('fotografia', category.photos.length)} curate`;
+
+    header.appendChild(title);
+    header.appendChild(subtitle);
+
+    const grid = document.createElement('div');
+    grid.className = 'masonry-grid';
+
+    category.photos.forEach((photoPath, index) => {
+      const item = createGalleryItem(photoPath, `${category.title} ${index + 1}`, category.photos, index);
+      grid.appendChild(item);
+    });
+
+    inner.appendChild(header);
+    inner.appendChild(grid);
+    section.appendChild(inner);
+    container.appendChild(section);
+  });
+}
+
+function createGalleryItem(photoPath, altText, photoCollection, index) {
+  const item = document.createElement('div');
+  item.className = 'gallery-item reveal';
+
+  const img = document.createElement('img');
+  img.src = photoPath;
+  img.alt = altText;
+  img.loading = 'lazy';
+
+  item.appendChild(img);
+  item.addEventListener('click', () => openLightbox(index, photoCollection));
+
+  return item;
+}
+
+function pluralize(word, count) {
+  if (count === 1) return word;
+  if (word.endsWith('a')) {
+    return `${word.slice(0, -1)}e`;
+  }
+  return `${word}s`;
+}
+
 function initScrollReveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                observer.unobserve(entry.target); // Anima solo alla prima visualizzazione
-            }
-        });
-    }, {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15
-    });
+  const reveals = document.querySelectorAll('.reveal');
+  if (!reveals.length) return;
 
-    reveals.forEach(reveal => {
-        observer.observe(reveal);
-    });
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    }
+  );
+
+  reveals.forEach((reveal) => observer.observe(reveal));
 }
 
-// ==========================================
-// LIGHTBOX LOGIC
-// ==========================================
 let currentPhotoIndex = 0;
 let galleryData = [];
 
 function openLightbox(index, photos) {
-    galleryData = photos;
-    currentPhotoIndex = index;
-    const lightbox = document.getElementById('lightbox');
-    
-    // Disabilita lo scroll del background
-    document.body.style.overflow = 'hidden';
-    
-    lightbox.style.display = 'flex';
-    // Timeout breve per far sì che il display:flex venga applicato prima di cambiare opacity
-    setTimeout(() => {
-        lightbox.classList.add('active');
-    }, 10);
-    
-    updateLightboxImage();
+  galleryData = photos;
+  currentPhotoIndex = index;
+  const lightbox = document.getElementById('lightbox');
+
+  if (!lightbox) return;
+
+  document.body.style.overflow = 'hidden';
+  lightbox.style.display = 'flex';
+  setTimeout(() => {
+    lightbox.classList.add('active');
+  }, 10);
+
+  updateLightboxImage();
 }
 
 function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('active');
-    
-    // Ripristina lo scroll
-    document.body.style.overflow = '';
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox) return;
 
-    setTimeout(() => {
-        lightbox.style.display = 'none';
-        document.getElementById('lightbox-img').src = ''; // Pulisce il src
-    }, 400); // Attende la fine della transizione CSS
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+
+  setTimeout(() => {
+    lightbox.style.display = 'none';
+    const img = document.getElementById('lightbox-img');
+    if (img) img.src = '';
+  }, 400);
 }
 
 function updateLightboxImage() {
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightboxImg.src = galleryData[currentPhotoIndex];
+  const lightboxImg = document.getElementById('lightbox-img');
+  if (!lightboxImg || !galleryData.length) return;
+  lightboxImg.src = galleryData[currentPhotoIndex];
 }
 
 function changeLightboxImage(direction) {
-    currentPhotoIndex += direction;
-    // Cicla se superati i limiti
-    if (currentPhotoIndex < 0) {
-        currentPhotoIndex = galleryData.length - 1;
-    } else if (currentPhotoIndex >= galleryData.length) {
-        currentPhotoIndex = 0;
-    }
-    updateLightboxImage();
+  if (!galleryData.length) return;
+
+  currentPhotoIndex += direction;
+  if (currentPhotoIndex < 0) {
+    currentPhotoIndex = galleryData.length - 1;
+  } else if (currentPhotoIndex >= galleryData.length) {
+    currentPhotoIndex = 0;
+  }
+  updateLightboxImage();
 }
 
 function initLightboxEvents() {
-    const lightboxClose = document.querySelector('.lightbox-close');
-    const lightboxPrev = document.querySelector('.lightbox-prev');
-    const lightboxNext = document.querySelector('.lightbox-next');
-    const lightbox = document.getElementById('lightbox');
-    
-    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-    if (lightboxPrev) lightboxPrev.addEventListener('click', () => changeLightboxImage(-1));
-    if (lightboxNext) lightboxNext.addEventListener('click', () => changeLightboxImage(1));
-    
-    // Chiudi cliccando fuori dall'immagine
-    if (lightbox) {
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-    }
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox) return;
 
-    // Controlli da tastiera
-    document.addEventListener('keydown', (e) => {
-        if (!lightbox || !lightbox.classList.contains('active')) return;
-        
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowLeft') changeLightboxImage(-1);
-        if (e.key === 'ArrowRight') changeLightboxImage(1);
-    });
+  const lightboxClose = document.querySelector('.lightbox-close');
+  const lightboxPrev = document.querySelector('.lightbox-prev');
+  const lightboxNext = document.querySelector('.lightbox-next');
+
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxPrev) lightboxPrev.addEventListener('click', () => changeLightboxImage(-1));
+  if (lightboxNext) lightboxNext.addEventListener('click', () => changeLightboxImage(1));
+
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (!lightbox.classList.contains('active')) return;
+    if (event.key === 'Escape') closeLightbox();
+    if (event.key === 'ArrowLeft') changeLightboxImage(-1);
+    if (event.key === 'ArrowRight') changeLightboxImage(1);
+  });
 }
