@@ -150,6 +150,12 @@ function initMobileNav() {
     });
   });
 
+  document.addEventListener('click', (event) => {
+    if (!document.body.classList.contains('nav-open')) return;
+    if (nav.contains(event.target) || toggle.contains(event.target)) return;
+    closeNav();
+  });
+
   window.addEventListener('resize', () => {
     if (window.innerWidth > 900) {
       closeNav();

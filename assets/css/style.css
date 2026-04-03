@@ -175,37 +175,45 @@ a:hover {
 
 .nav-toggle {
     display: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
     border: 1px solid var(--border-color);
-    background: rgba(5, 5, 5, 0.4);
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    background: rgba(5, 5, 5, 0.65);
     color: var(--text-color);
-    align-items: center;
-    justify-content: center;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     cursor: pointer;
     transition: background 0.3s ease, border-color 0.3s ease;
+    gap: 0.5rem;
 }
 
-.nav-toggle span {
-    width: 20px;
+.nav-toggle::after {
+    content: "Menu";
+}
+
+.nav-toggle-icon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    margin-left: 0.5rem;
+}
+
+.nav-toggle-icon span {
+    width: 16px;
     height: 2px;
     background: currentColor;
     display: block;
-    margin: 3px 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-body.nav-open .nav-toggle span:nth-child(1) {
-    transform: translateY(5px) rotate(45deg);
+body.nav-open .nav-toggle-icon span:nth-child(1) {
+    transform: translateY(2px) rotate(45deg);
 }
 
-body.nav-open .nav-toggle span:nth-child(2) {
-    opacity: 0;
-}
-
-body.nav-open .nav-toggle span:nth-child(3) {
-    transform: translateY(-5px) rotate(-45deg);
+body.nav-open .nav-toggle-icon span:nth-child(2) {
+    transform: translateY(-2px) rotate(-45deg);
 }
 
 .nav-overlay {
@@ -661,16 +669,22 @@ body.nav-open .nav-overlay {
         justify-content: space-between;
     }
 
+    .nav-dropdown {
+        width: 100%;
+    }
+
     .nav-dropdown-menu {
         position: static;
         transform: none;
         background: transparent;
         border: none;
         box-shadow: none;
-        padding: 0 0 0 1rem;
+        padding: 0 0 0.5rem 1rem;
+        margin-top: 0.5rem;
         opacity: 1;
         visibility: visible;
         display: none;
+        min-width: auto;
     }
 
     .nav-dropdown.open .nav-dropdown-menu {
