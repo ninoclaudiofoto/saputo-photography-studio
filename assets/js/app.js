@@ -56,7 +56,7 @@ function initPortfolioDropdown(data, pageContext) {
 
   const baseItem = document.createElement('li');
   const baseLink = document.createElement('a');
-  baseLink.href = 'portfolio.html';
+  baseLink.href = 'portfolio.html#portfolio-categories';
   baseLink.textContent = 'Tutte le categorie';
   baseItem.appendChild(baseLink);
   menu.appendChild(baseItem);
