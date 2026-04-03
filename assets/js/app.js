@@ -37,7 +37,8 @@ function populateUI(data, pageContext) {
     renderPortfolioCategories(data.portfolio_categories || []);
   } else {
     renderHeroSection(data.featured_photos || []);
-    renderGallerySection(data.gallery_photos || []);
+    const homePhotos = data.home_photos || [];
+    renderGallerySection(homePhotos);
   }
 }
 

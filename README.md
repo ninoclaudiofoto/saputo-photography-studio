@@ -5,8 +5,9 @@ Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categor
 ## Modificare i contenuti
 
 - Tutti i testi e i link sono centralizzati in **`data.js`**.
-- I campi `featured_photos` e `gallery_photos` puntano a file dentro `assets/img/home/`.
-- La chiave `portfolio_categories` viene generata automaticamente dallo script `optimize.js` e non va modificata a mano.
+- `featured_photos` contiene manualmente le tre foto in evidenza (sezione hero).
+- `home_photos` viene popolato automaticamente in base alle immagini trovate in `assets/img/home/`.
+- `portfolio_categories` viene generato automaticamente dallo script `optimize.js` e non va modificato a mano.
 
 Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di ottimizzazione.
 
@@ -24,10 +25,10 @@ Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di o
 1. Copia le nuove foto (JPG/PNG) nella cartella corretta (`home/` oppure `categories/<categoria>/`). Se la cartella non esiste, creala.
 2. Esegui `node optimize.js` dalla root del progetto:
    - converte le immagini in WebP sovrascrivendo i file originali;
-   - aggiorna automaticamente `data.js` con la struttura delle categorie.
+   - aggiorna automaticamente `data.js` con l'elenco ordinato delle foto in `home/` (`home_photos`) e con la struttura delle categorie.
 3. Verifica il risultato (preview locale o GitHub Pages), poi effettua commit e push.
 
-> **Nota**: se preferisci caricare solo WebP già ottimizzate, puoi inserirle direttamente nelle cartelle e aggiornare manualmente `featured_photos`/`gallery_photos`. Per le categorie è comunque consigliato eseguire `node optimize.js` così da rigenerare `portfolio_categories`.
+> **Nota**: se preferisci caricare solo WebP già ottimizzate, puoi inserirle direttamente nelle cartelle e aggiornare manualmente soltanto `featured_photos`. Per `home_photos` e `portfolio_categories` è comunque consigliato eseguire `node optimize.js` così da rigenerare i dati automaticamente.
 
 ---
 
