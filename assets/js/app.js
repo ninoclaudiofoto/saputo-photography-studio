@@ -56,7 +56,8 @@ function initPortfolioDropdown(data, pageContext) {
 
   const baseItem = document.createElement('li');
   const baseLink = document.createElement('a');
-  baseLink.href = 'portfolio.html#portfolio-categories';
+  const isPortfolioPage = pageContext === 'portfolio';
+  baseLink.href = isPortfolioPage ? '#top' : 'portfolio.html#portfolio-categories';
   baseLink.textContent = 'Tutte le categorie';
   baseItem.appendChild(baseLink);
   menu.appendChild(baseItem);
@@ -64,10 +65,18 @@ function initPortfolioDropdown(data, pageContext) {
   (data.portfolio_categories || []).forEach((category) => {
     const li = document.createElement('li');
     const link = document.createElement('a');
-    link.href = `portfolio.html#category-${category.slug}`;
+    link.href = isPortfolioPage ? `#category-${category.slug}` : `portfolio.html#category-${category.slug}`;
     link.textContent = category.title;
     li.appendChild(link);
     menu.appendChild(li);
+
+    if (isPortfolioPage) {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        scrollToSection(`category-${category.slug}`);
+        closeDropdown();
+      });
+    }
   });
 
   const closeDropdown = () => {
@@ -75,13 +84,10 @@ function initPortfolioDropdown(data, pageContext) {
     toggle.setAttribute('aria-expanded', 'false');
   };
 
-  if (pageContext === 'portfolio') {
+  if (isPortfolioPage) {
     baseLink.addEventListener('click', (event) => {
       event.preventDefault();
-      const target = document.getElementById('portfolio-categories') || document.getElementById('hero');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
+      scrollToTop();
       closeDropdown();
     });
   }
@@ -102,6 +108,17 @@ function initPortfolioDropdown(data, pageContext) {
       closeDropdown();
     }
   });
+}
+
+function scrollToSection(id) {
+  const target = document.getElementById(id) || document.getElementById('hero');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function setBaseSiteInfo(data, pageContext) {
