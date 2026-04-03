@@ -699,7 +699,8 @@ body.nav-open .nav-overlay {
     }
 
     .nav-dropdown-menu li {
-        padding: 0.2rem 0 0.2rem 1rem;
+        padding: 0.2rem 1rem 0.2rem 0;
+        text-align: right;
     }
 
     .nav-dropdown.open>.nav-dropdown-toggle {
