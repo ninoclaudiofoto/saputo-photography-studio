@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageContext = document.body?.dataset?.page || 'home';
 
   if (typeof siteData !== 'undefined') {
-    initPortfolioDropdown(siteData);
+    initPortfolioDropdown(siteData, pageContext);
     populateUI(siteData, pageContext);
     initScrollReveal();
     initLightboxEvents();
@@ -46,7 +46,7 @@ function populateUI(data, pageContext) {
   renderGallerySection(recentWorkPhotos, 'Recent Works');
 }
 
-function initPortfolioDropdown(data) {
+function initPortfolioDropdown(data, pageContext) {
   const menu = document.getElementById('nav-portfolio-menu');
   const dropdown = menu?.closest('.nav-dropdown');
   const toggle = dropdown?.querySelector('.nav-dropdown-toggle');
@@ -74,6 +74,17 @@ function initPortfolioDropdown(data) {
     dropdown.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
   };
+
+  if (pageContext === 'portfolio') {
+    baseLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      const target = document.getElementById('portfolio-categories') || document.getElementById('hero');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+      closeDropdown();
+    });
+  }
 
   toggle.addEventListener('click', (event) => {
     event.preventDefault();
