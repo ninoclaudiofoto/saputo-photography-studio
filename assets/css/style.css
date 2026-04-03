@@ -670,6 +670,7 @@ body.nav-open .nav-overlay {
         padding: 0.5rem 0;
         border-color: transparent;
     }
+
     .nav-dropdown {
         width: 100%;
     }
@@ -714,18 +715,20 @@ body.nav-open .nav-overlay {
         width: 100%;
         overflow: hidden;
         max-height: 0;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        padding: 0;
     }
 
     .nav-dropdown.open .nav-dropdown-menu {
         max-height: 400px;
+        padding-bottom: 0.5rem;
     }
 
     .nav-dropdown-menu li {
         padding: 0.2rem 0 0.2rem 1rem;
     }
 
-    .nav-dropdown.open > .nav-dropdown-toggle {
+    .nav-dropdown.open>.nav-dropdown-toggle {
         border-bottom: 1px solid var(--border-color);
     }
 }

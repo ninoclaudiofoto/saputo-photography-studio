@@ -1,23 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const currentYearEl = document.getElementById('current-year');
-    if (currentYearEl) {
-        currentYearEl.textContent = new Date().getFullYear();
-    }
+  const currentYearEl = document.getElementById('current-year');
+  if (currentYearEl) {
+    currentYearEl.textContent = new Date().getFullYear();
+  }
 
-    const header = document.querySelector('.header');
-    if (header) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-    }
+  const header = document.querySelector('.header');
+  if (header) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  }
 
-    initMobileNav();
+  initMobileNav();
 
-    const pageContext = document.body?.dataset?.page || 'home';
+  const pageContext = document.body?.dataset?.page || 'home';
 
   if (typeof siteData !== 'undefined') {
     initPortfolioDropdown(siteData, pageContext);
@@ -97,6 +97,12 @@ function initPortfolioDropdown(data, pageContext) {
 
   toggle.addEventListener('click', (event) => {
     event.preventDefault();
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
+    if (isMobile) {
+      document.querySelectorAll('.nav-dropdown').forEach((item) => {
+        if (item !== dropdown) item.classList.remove('open');
+      });
+    }
     const isOpen = dropdown.classList.contains('open');
     if (isOpen) {
       closeDropdown();
@@ -159,6 +165,7 @@ function initMobileNav() {
   window.addEventListener('resize', () => {
     if (window.innerWidth > 900) {
       closeNav();
+      document.querySelectorAll('.nav-dropdown').forEach((item) => item.classList.remove('open'));
     }
   });
 }
