@@ -4,10 +4,11 @@ Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categor
 
 ## Modificare i contenuti
 
-- Tutti i testi e i link sono centralizzati in **`data.js`**.
-- `home_highlights` contiene le foto utilizzate nella hero e viene aggiornato automaticamente a partire da `assets/img/home/highlights/`.
-- `home_recent_works` rappresenta la galleria principale della homepage ed è generato da `assets/img/home/recent-works/`.
-- `portfolio_categories` viene popolato dallo script `optimize.js` scansionando `assets/img/categories/<nome>`.
+- **`content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti, link social e il blocco `portfolio_intro` (tagline e descrizione della hero di `portfolio.html`). Non viene toccato dallo script.
+- **`data.js`**: file generato automaticamente da `optimize.js` (non modificarlo a mano). Contiene soltanto i dati dinamici letti dalle cartelle immagini:
+  - `home_highlights` → immagini in `assets/img/home/highlights/`.
+  - `home_recent_works` → immagini in `assets/img/home/recent-works/`.
+  - `portfolio_categories` → cartelle trovate in `assets/img/categories/<nome>/`.
 
 Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di ottimizzazione.
 
@@ -30,6 +31,8 @@ Ricorda di commitare `data.js` dopo ogni modifica o esecuzione dello script di o
 3. Verifica il risultato (preview locale o GitHub Pages), poi effettua commit e push.
 
 > **Nota**: se preferisci caricare solo WebP già ottimizzate, puoi inserirle direttamente nelle cartelle. Mantieni però la convenzione di rilanciare `node optimize.js` così da ricostruire i dati (o aggiorna manualmente `home_highlights` se vuoi forzare un ordine specifico).
+
+Le modifiche puramente testuali (nome, contatti, hero del portfolio) si applicano semplicemente salvando `content.js`: non serve rilanciare lo script.
 
 ---
 

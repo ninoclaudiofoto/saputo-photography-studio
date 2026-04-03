@@ -35,6 +35,7 @@ function populateUI(data, pageContext) {
   setBaseSiteInfo(data, pageContext);
 
   if (pageContext === 'portfolio') {
+    updatePortfolioHero(data);
     renderPortfolioCategories(data.portfolio_categories || []);
     return;
   }
@@ -233,6 +234,20 @@ function renderPortfolioCategories(categories) {
     section.appendChild(inner);
     container.appendChild(section);
   });
+}
+
+function updatePortfolioHero(data) {
+  const heroTitle = document.getElementById('portfolio-hero-tagline');
+  const heroDescription = document.getElementById('portfolio-hero-description');
+  const intro = data.portfolio_intro || {};
+
+  if (heroTitle && intro.tagline) {
+    heroTitle.textContent = intro.tagline;
+  }
+
+  if (heroDescription && intro.description) {
+    heroDescription.textContent = intro.description;
+  }
 }
 
 function createGalleryItem(photoPath, altText, photoCollection, index) {

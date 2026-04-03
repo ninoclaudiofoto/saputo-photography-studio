@@ -2,7 +2,6 @@ const fs = require('fs');
 const fsp = fs.promises;
 const path = require('path');
 const sharp = require('sharp');
-const vm = require('vm');
 
 const ROOT_DIR = __dirname;
 const HOME_DIR = path.join(ROOT_DIR, 'assets', 'img', 'home');
@@ -131,27 +130,17 @@ function toWebPath(absolutePath) {
   return relative.split(path.sep).join('/');
 }
 
-async function updateDataFile(partialData) {
-  const current = await loadSiteData();
-  const nextData = { ...current, ...partialData };
+async function updateDataFile(generatedData) {
   const serialized = [
-    'const siteData = ',
-    JSON.stringify(nextData, null, 2),
-    ';\n'
+    'const siteGenerated = ',
+    JSON.stringify(generatedData, null, 2),
+    ';\n\n',
+    'const siteData = Object.assign(\n',
+    '  {},\n',
+    '  typeof siteContent !== "undefined" ? siteContent : {},\n',
+    '  siteGenerated\n',
+    ');\n'
   ].join('');
 
   await fsp.writeFile(DATA_FILE, serialized, 'utf8');
-}
-
-async function loadSiteData() {
-  const raw = await fsp.readFile(DATA_FILE, 'utf8');
-  const script = new vm.Script(`${raw}\nsiteData;`, { filename: 'data.js' });
-  const context = {};
-  const result = script.runInNewContext(context);
-
-  if (!result || typeof result !== 'object') {
-    throw new Error('Impossibile estrarre siteData da data.js');
-  }
-
-  return result;
 }

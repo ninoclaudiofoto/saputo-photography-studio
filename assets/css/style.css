@@ -80,9 +80,9 @@ a:hover {
 
 .logo {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 2.2vw, 2.4rem);
     font-weight: 400;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     font-style: italic;
 }
 

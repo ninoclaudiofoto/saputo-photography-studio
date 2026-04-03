@@ -1,11 +1,4 @@
-const siteData = {
-  "name": "Antonino Saputo",
-  "tab_title": "Antonino Saputo | Fotografo Professionista a Palermo",
-  "main_title": "Antonino Saputo | Fotografo",
-  "email": "sapunino08@gmail.com",
-  "phone": "+39 389 426 2969",
-  "whatsapp": "393894262969",
-  "instagram": "https://www.instagram.com/ninocla__fotografo_palermo?igsh=MWE2cm9oYW9naHk1Zw==",
+const siteGenerated = {
   "home_highlights": [
     "assets/img/home/highlights/1.webp",
     "assets/img/home/highlights/2.webp",
@@ -62,3 +55,9 @@ const siteData = {
     }
   ]
 };
+
+const siteData = Object.assign(
+  {},
+  typeof siteContent !== "undefined" ? siteContent : {},
+  siteGenerated
+);
