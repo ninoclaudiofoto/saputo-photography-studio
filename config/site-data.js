@@ -36,18 +36,18 @@ const siteGenerated = {
   ],
   "portfolio_categories": [
     {
-      "slug": "cacchina",
-      "title": "Cacchina",
-      "cover": "assets/img/categories/cacchina/DSCF4264.webp",
+      "slug": "compleanni",
+      "title": "Compleanni",
+      "cover": "assets/img/categories/compleanni/DSCF4264.webp",
       "photos": [
-        "assets/img/categories/cacchina/DSCF4264.webp",
-        "assets/img/categories/cacchina/DSCF4305.webp",
-        "assets/img/categories/cacchina/DSCF4331.webp",
-        "assets/img/categories/cacchina/DSCF7937.webp",
-        "assets/img/categories/cacchina/DSCF9294.webp",
-        "assets/img/categories/cacchina/DSCF9454.webp",
-        "assets/img/categories/cacchina/DSCF9585.webp",
-        "assets/img/categories/cacchina/DSCF9848.webp"
+        "assets/img/categories/compleanni/DSCF4264.webp",
+        "assets/img/categories/compleanni/DSCF4305.webp",
+        "assets/img/categories/compleanni/DSCF4331.webp",
+        "assets/img/categories/compleanni/DSCF7937.webp",
+        "assets/img/categories/compleanni/DSCF9294.webp",
+        "assets/img/categories/compleanni/DSCF9454.webp",
+        "assets/img/categories/compleanni/DSCF9585.webp",
+        "assets/img/categories/compleanni/DSCF9848.webp"
       ]
     },
     {
