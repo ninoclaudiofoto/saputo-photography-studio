@@ -8,6 +8,6 @@ const siteContent = {
   instagram: "https://www.instagram.com/ninocla__fotografo_palermo?igsh=MWE2cm9oYW9naHk1Zw==",
   portfolio_intro: {
     tagline: "Storie visive dedicate",
-    description: "Ogni categoria raccoglie set fotografici con uno stile e un racconto specifico. Scegli la tematica per esplorare griglie complete in alta qualità."
+    description: "Ogni categoria raccoglie set fotografici con uno stile e un racconto specifico."
   }
 };
