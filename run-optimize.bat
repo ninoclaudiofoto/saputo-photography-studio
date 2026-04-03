@@ -59,6 +59,11 @@ if /I not "%response%"=="y" (
     exit /b 0
 )
 call :git_push
+if errorlevel 1 (
+    echo [WARN] Operazioni git non completate.
+) else (
+    echo Git push completato correttamente.
+)
 exit /b 0
 
 :git_push
@@ -68,9 +73,10 @@ if "%CURRENT_BRANCH%"=="" (
     exit /b 1
 )
 
-set "commit_msg="
-set /p "commit_msg=Commit message (default: chore: update media): "
-if "%commit_msg%"=="" set "commit_msg=chore: update media"
+git status --porcelain >NUL 2>&1 || (
+    echo [ERROR] git status non disponibile.
+    exit /b 1
+)
 
 echo.
 echo Eseguo git add -A ...
@@ -79,9 +85,15 @@ git add -A || (
     exit /b 1
 )
 
+git diff --cached --quiet && (
+    echo Nessuna modifica da committare. Salto git push.
+    exit /b 0
+)
+
+set "commit_msg=chore: update media"
 echo Commit: %commit_msg%
 git commit -m "%commit_msg%" || (
-    echo [ERROR] git commit fallito (forse nessuna modifica?).
+    echo [ERROR] git commit fallito.
     exit /b 1
 )
 
@@ -97,6 +109,7 @@ exit /b 0
 :pause
 echo.
 pause
+goto end
 
 :end
 popd >NUL

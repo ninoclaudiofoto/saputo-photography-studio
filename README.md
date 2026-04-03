@@ -38,7 +38,7 @@ Le modifiche puramente testuali (nome, contatti, hero del portfolio) si applican
 
 ## Script rapido
 
-- **Windows**: esegui `run-optimize.bat`. Lo script verifica la presenza di Node.js (installandolo automaticamente tramite Winget o Chocolatey quando possibile) e poi lancia `node optimize.js`.
+- **Windows**: esegui `run-optimize.bat`. Lo script verifica la presenza di Node.js (installandolo automaticamente tramite Winget o Chocolatey quando possibile), poi lancia `node optimize.js`, resta aperto finché non premi un tasto e offre un prompt per eseguire automaticamente `git add/commit/push` (commit message fisso `chore: update media`).
 - **macOS / Linux**: non è incluso uno script dedicato; apri il terminale nella root del progetto ed esegui manualmente `node optimize.js` dopo aver installato Node.js.
 
 Se l'installazione automatica non è possibile o stai usando macOS/Linux, fai riferimento a [nodejs.org](https://nodejs.org/) o al package manager della tua distribuzione per installare Node.js prima di eseguire lo script/il comando.
