@@ -1,21 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const currentYearEl = document.getElementById('current-year');
-  if (currentYearEl) {
-    currentYearEl.textContent = new Date().getFullYear();
-  }
+    const currentYearEl = document.getElementById('current-year');
+    if (currentYearEl) {
+        currentYearEl.textContent = new Date().getFullYear();
+    }
 
-  const header = document.querySelector('.header');
-  if (header) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-  }
+    const header = document.querySelector('.header');
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    }
 
-  const pageContext = document.body?.dataset?.page || 'home';
+    initMobileNav();
+
+    const pageContext = document.body?.dataset?.page || 'home';
 
   if (typeof siteData !== 'undefined') {
     initPortfolioDropdown(siteData, pageContext);
@@ -120,6 +122,39 @@ function scrollToSection(id) {
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function initMobileNav() {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.nav');
+  const overlay = document.querySelector('.nav-overlay');
+  if (!toggle || !nav) return;
+
+  const closeNav = () => {
+    document.body.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle.addEventListener('click', () => {
+    const isOpen = document.body.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  overlay?.addEventListener('click', closeNav);
+
+  nav.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        closeNav();
+      }
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) {
+      closeNav();
+    }
+  });
 }
 
 function setBaseSiteInfo(data, pageContext) {
