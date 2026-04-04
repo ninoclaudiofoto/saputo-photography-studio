@@ -36,36 +36,60 @@ const siteGenerated = {
   ],
   "portfolio_categories": [
     {
-      "slug": "compleanni",
-      "title": "Compleanni",
-      "cover": "assets/img/categories/compleanni/DSCF4264.webp",
-      "photos": [
-        "assets/img/categories/compleanni/DSCF4264.webp",
-        "assets/img/categories/compleanni/DSCF4305.webp",
-        "assets/img/categories/compleanni/DSCF4331.webp",
-        "assets/img/categories/compleanni/DSCF7937.webp",
-        "assets/img/categories/compleanni/DSCF9294.webp",
-        "assets/img/categories/compleanni/DSCF9454.webp",
-        "assets/img/categories/compleanni/DSCF9585.webp",
-        "assets/img/categories/compleanni/DSCF9848.webp"
-      ]
-    },
-    {
       "slug": "matrimoni",
       "title": "Matrimoni",
-      "cover": "assets/img/categories/matrimoni/DSCF1110.webp",
+      "cover": "assets/img/categories/matrimoni/DSCF1025.webp",
       "photos": [
+        "assets/img/categories/matrimoni/DSCF1025.webp",
         "assets/img/categories/matrimoni/DSCF1110.webp",
-        "assets/img/categories/matrimoni/DSCF1132.webp"
+        "assets/img/categories/matrimoni/DSCF1132.webp",
+        "assets/img/categories/matrimoni/DSCF1168.webp",
+        "assets/img/categories/matrimoni/DSCF1196.webp",
+        "assets/img/categories/matrimoni/DSCF3224.webp",
+        "assets/img/categories/matrimoni/DSCF3237.webp",
+        "assets/img/categories/matrimoni/DSCF3279.webp",
+        "assets/img/categories/matrimoni/DSCF3476.webp",
+        "assets/img/categories/matrimoni/DSCF3727.webp",
+        "assets/img/categories/matrimoni/DSCF3791.webp",
+        "assets/img/categories/matrimoni/DSCF3973.webp",
+        "assets/img/categories/matrimoni/DSCF4264.webp",
+        "assets/img/categories/matrimoni/DSCF4305.webp",
+        "assets/img/categories/matrimoni/DSCF4331.webp",
+        "assets/img/categories/matrimoni/DSCF7937.webp",
+        "assets/img/categories/matrimoni/DSCF7984.webp",
+        "assets/img/categories/matrimoni/DSCF8018.webp",
+        "assets/img/categories/matrimoni/DSCF8300.webp",
+        "assets/img/categories/matrimoni/DSCF8304.webp",
+        "assets/img/categories/matrimoni/DSCF8399.webp",
+        "assets/img/categories/matrimoni/DSCF8934.webp",
+        "assets/img/categories/matrimoni/DSCF9050.webp",
+        "assets/img/categories/matrimoni/DSCF9289.webp",
+        "assets/img/categories/matrimoni/DSCF9294.webp",
+        "assets/img/categories/matrimoni/DSCF9454.webp",
+        "assets/img/categories/matrimoni/DSCF9585.webp",
+        "assets/img/categories/matrimoni/DSCF9848.webp"
       ]
     },
     {
       "slug": "ritratti",
       "title": "Ritratti",
-      "cover": "assets/img/categories/ritratti/DSCF1168.webp",
+      "cover": "assets/img/categories/ritratti/DSCF1110.webp",
       "photos": [
+        "assets/img/categories/ritratti/DSCF1110.webp",
+        "assets/img/categories/ritratti/DSCF1132.webp",
         "assets/img/categories/ritratti/DSCF1168.webp",
-        "assets/img/categories/ritratti/DSCF1196.webp"
+        "assets/img/categories/ritratti/DSCF3224.webp",
+        "assets/img/categories/ritratti/DSCF3237.webp",
+        "assets/img/categories/ritratti/DSCF3279.webp",
+        "assets/img/categories/ritratti/DSCF3727.webp",
+        "assets/img/categories/ritratti/DSCF4305.webp",
+        "assets/img/categories/ritratti/DSCF7937.webp",
+        "assets/img/categories/ritratti/DSCF7984.webp",
+        "assets/img/categories/ritratti/DSCF8300.webp",
+        "assets/img/categories/ritratti/DSCF8304.webp",
+        "assets/img/categories/ritratti/DSCF8399.webp",
+        "assets/img/categories/ritratti/DSCF9454.webp",
+        "assets/img/categories/ritratti/DSCF9585.webp"
       ]
     }
   ]
