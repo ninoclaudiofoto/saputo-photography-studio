@@ -36,6 +36,48 @@ const siteGenerated = {
   ],
   "portfolio_categories": [
     {
+      "slug": "Adolfo & Laura",
+      "title": "Adolfo & Laura",
+      "cover": "assets/img/categories/Adolfo & Laura/DSCF1025.webp",
+      "photos": [
+        "assets/img/categories/Adolfo & Laura/DSCF1025.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF1110.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF1132.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF1168.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF1196.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF3224.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF3237.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF3279.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF3476.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF3727.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF3791.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF3973.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF4264.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF4305.webp",
+        "assets/img/categories/Adolfo & Laura/DSCF4331.webp"
+      ]
+    },
+    {
+      "slug": "Benedetto & Enrica",
+      "title": "Benedetto & Enrica",
+      "cover": "assets/img/categories/Benedetto & Enrica/DSCF7937.webp",
+      "photos": [
+        "assets/img/categories/Benedetto & Enrica/DSCF7937.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF7984.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF8018.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF8300.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF8304.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF8399.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF8934.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF9050.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF9289.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF9294.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF9454.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF9585.webp",
+        "assets/img/categories/Benedetto & Enrica/DSCF9848.webp"
+      ]
+    },
+    {
       "slug": "matrimoni",
       "title": "Matrimoni",
       "cover": "assets/img/categories/matrimoni/DSCF1025.webp",
