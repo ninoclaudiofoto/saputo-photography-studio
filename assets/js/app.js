@@ -135,9 +135,11 @@ function renderBioHero(photoPath) {
 function renderGallerySection(photos, label) {
   const galleryGrid = document.getElementById('gallery-grid');
   if (!galleryGrid) return;
+  galleryGrid.innerHTML = '';
 
   if (!photos.length) {
     galleryGrid.innerHTML = '<p>Nuove foto in arrivo.</p>';
+    initCarousel(galleryGrid);
     return;
   }
 
@@ -146,6 +148,7 @@ function renderGallerySection(photos, label) {
     const item = createGalleryItem(photoPath, alt, photos, index);
     galleryGrid.appendChild(item);
   });
+  initCarousel(galleryGrid);
 }
 
 function renderPortfolioCategories(categories) {
@@ -183,9 +186,14 @@ function renderPortfolioCategories(categories) {
       grid.appendChild(item);
     });
 
+    const carouselWrapper = document.createElement('div');
+    carouselWrapper.className = 'carousel-wrapper';
+    carouselWrapper.appendChild(grid);
+
     inner.appendChild(header);
-    inner.appendChild(grid);
+    inner.appendChild(carouselWrapper);
     section.appendChild(inner);
+    initCarousel(grid);
     container.appendChild(section);
   });
 }
@@ -217,6 +225,40 @@ function createGalleryItem(photoPath, altText, photoCollection, index) {
   item.addEventListener('click', () => openLightbox(index, photoCollection));
 
   return item;
+}
+
+function initCarousel(track) {
+  if (!track) return;
+  track.classList.add('carousel-track');
+  const wrapper = track.closest('.carousel-wrapper');
+  if (!wrapper || wrapper.dataset.carouselReady === 'true') return;
+
+  const prevBtn = createCarouselButton('prev');
+  const nextBtn = createCarouselButton('next');
+
+  prevBtn.addEventListener('click', () => scrollCarousel(track, -1));
+  nextBtn.addEventListener('click', () => scrollCarousel(track, 1));
+
+  wrapper.appendChild(prevBtn);
+  wrapper.appendChild(nextBtn);
+  wrapper.dataset.carouselReady = 'true';
+}
+
+function createCarouselButton(direction) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = `carousel-nav carousel-nav--${direction}`;
+  button.setAttribute('aria-label', direction === 'prev' ? 'Scorri indietro' : 'Scorri avanti');
+  button.innerHTML = direction === 'prev' ? '&#10094;' : '&#10095;';
+  return button;
+}
+
+function scrollCarousel(track, direction) {
+  const amount = track.clientWidth * 0.85 || 320;
+  track.scrollBy({
+    left: amount * direction,
+    behavior: 'smooth'
+  });
 }
 
 function initScrollReveal() {
