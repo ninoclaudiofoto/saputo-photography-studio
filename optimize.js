@@ -111,11 +111,18 @@ async function removeFile(filePath) {
     await fsp.unlink(filePath);
   } catch (error) {
     if (error.code === 'EPERM') {
-      await fsp.chmod(filePath, 0o666);
-      await fsp.unlink(filePath);
-      return;
+      try {
+        await fsp.chmod(filePath, 0o666);
+        await fsp.unlink(filePath);
+        return;
+      } catch (retryError) {
+        console.warn(`Attenzione: impossibile eliminare ${filePath}. Proseguo lasciando il file originale.`, retryError.message);
+        return;
+      }
     }
-    if (error.code !== 'ENOENT') throw error;
+    if (error.code !== 'ENOENT') {
+      console.warn(`Attenzione: impossibile eliminare ${filePath}. Proseguo lasciando il file originale.`, error.message);
+    }
   }
 }
 
