@@ -185,12 +185,7 @@ function renderPortfolioCategories(categories) {
     title.className = 'section-title';
     title.textContent = category.title;
 
-    const subtitle = document.createElement('p');
-    subtitle.className = 'section-subtitle';
-    subtitle.textContent = `${category.photos.length} ${pluralize('fotografia', category.photos.length)} curate`;
-
     header.appendChild(title);
-    header.appendChild(subtitle);
 
     const grid = document.createElement('div');
     grid.className = 'masonry-grid';
@@ -234,14 +229,6 @@ function createGalleryItem(photoPath, altText, photoCollection, index) {
   item.addEventListener('click', () => openLightbox(index, photoCollection));
 
   return item;
-}
-
-function pluralize(word, count) {
-  if (count === 1) return word;
-  if (word.endsWith('a')) {
-    return `${word.slice(0, -1)}e`;
-  }
-  return `${word}s`;
 }
 
 function initScrollReveal() {
