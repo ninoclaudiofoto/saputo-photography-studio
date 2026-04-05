@@ -347,7 +347,7 @@ body.nav-open .nav-overlay {
 .hero-bio {
     display: flex;
     gap: 3rem;
-    align-items: flex-start;
+    align-items: stretch;
 }
 
 .hero-bio-photo,
@@ -360,18 +360,18 @@ body.nav-open .nav-overlay {
     height: 100%;
     max-height: 720px;
     object-fit: cover;
+    object-position: top center;
     border-radius: 12px;
     box-shadow: 0 20px 45px rgba(10, 10, 10, 0.2);
 }
 
 .hero-bio-content {
-    font-size: 1.05rem;
-    line-height: 1.75;
+    font-size: 1.02rem;
+    line-height: 1.55;
     color: var(--text-muted);
-}
-
-.hero-bio-content p {
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
 .hero-bio-content p:first-child {
