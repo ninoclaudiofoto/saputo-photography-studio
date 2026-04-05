@@ -1,10 +1,10 @@
 # Portfolio Antonino Saputo
 
-Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categorie (`portfolio.html`).
+Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categorie (`my-works.html`).
 
 ## Modificare i contenuti
 
-- **`config/site-content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti, link social e il blocco `portfolio_intro` (tagline e descrizione della hero di `portfolio.html`). Non viene toccato dallo script.
+- **`config/site-content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti, link social e il blocco `portfolio_intro` (tagline e descrizione della hero di `my-works.html`). Non viene toccato dallo script.
 - **`config/site-data.js`**: file generato automaticamente da `optimize.js` (non modificarlo a mano). Contiene soltanto i dati dinamici letti dalle cartelle immagini:
   - `home_highlights` → immagini in `assets/img/home/highlights/`.
   - `home_recent_works` → immagini in `assets/img/home/recent-works/`.
@@ -18,7 +18,7 @@ Ricorda di commitare `config/site-data.js` dopo ogni modifica o esecuzione dello
 
 - `assets/img/home/highlights/`: fino a tre scatti (ordinati alfabeticamente) mostrati nella hero Highlights.
 - `assets/img/home/recent-works/`: tutte le foto mostrate nella sezione “Recent Works”.
-- `assets/img/categories/<nome-categoria>/`: raccolte tematiche mostrate su `portfolio.html` (es: `matrimoni`, `ritratti`, ...). Ogni cartella diventa una sezione autonoma.
+- `assets/img/categories/<nome-categoria>/`: raccolte tematiche mostrate su `my-works.html` (es: `matrimoni`, `ritratti`, ...). Ogni cartella diventa una sezione autonoma.
 
 ---
 
@@ -47,6 +47,6 @@ Se l'installazione automatica non è possibile o stai usando macOS/Linux, fai ri
 
 ## Navigazione
 
-- La homepage ora mostra “Highlights” + “Recent Works” e rimanda, dal menu, alla pagina portfolio dedicata.
-- `portfolio.html` costruisce dinamicamente una sezione per ogni cartella trovata in `assets/img/categories/`.
+- La homepage ora mostra “Highlights” + “Recent Works” e rimanda, dal menu, alla pagina “I miei lavori”.
+- `my-works.html` costruisce dinamicamente una sezione per ogni cartella trovata in `assets/img/categories/`.
 - Entrambe le pagine condividono lo stesso header/nav e la stessa sezione contatti (aggiornata tramite `data.js`).

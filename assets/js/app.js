@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageContext = document.body?.dataset?.page || 'home';
 
   if (typeof siteData !== 'undefined') {
-    initPortfolioDropdown(siteData, pageContext);
     populateUI(siteData, pageContext);
     initScrollReveal();
     initLightboxEvents();
@@ -36,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function populateUI(data, pageContext) {
   setBaseSiteInfo(data, pageContext);
 
-  if (pageContext === 'portfolio') {
-    updatePortfolioHero(data);
+  if (pageContext === 'my-works') {
+    updateWorksHero(data);
     renderPortfolioCategories(data.portfolio_categories || []);
     return;
   }
@@ -47,103 +46,6 @@ function populateUI(data, pageContext) {
 
   renderHeroSection(highlightPhotos);
   renderGallerySection(recentWorkPhotos, 'Recent Works');
-}
-
-function initPortfolioDropdown(data, pageContext) {
-  const menu = document.getElementById('nav-portfolio-menu');
-  const dropdown = menu?.closest('.nav-dropdown');
-  const toggle = dropdown?.querySelector('.nav-dropdown-toggle');
-  if (!menu || !dropdown || !toggle) return;
-
-  menu.innerHTML = '';
-
-  const baseItem = document.createElement('li');
-  const baseLink = document.createElement('a');
-  const isPortfolioPage = pageContext === 'portfolio';
-  baseLink.href = isPortfolioPage ? '#top' : 'portfolio.html#top';
-  baseLink.textContent = 'Tutte';
-  baseItem.appendChild(baseLink);
-  menu.appendChild(baseItem);
-
-  (data.portfolio_categories || []).forEach((category) => {
-    const li = document.createElement('li');
-    const link = document.createElement('a');
-    link.href = isPortfolioPage ? `#category-${category.slug}` : `portfolio.html#category-${category.slug}`;
-    link.textContent = category.title;
-    li.appendChild(link);
-    menu.appendChild(li);
-
-    if (isPortfolioPage) {
-      link.addEventListener('click', (event) => {
-        event.preventDefault();
-        scrollToSection(`category-${category.slug}`);
-        closeDropdown();
-      });
-    }
-  });
-
-  const closeDropdown = () => {
-    dropdown.classList.remove('open');
-    toggle.setAttribute('aria-expanded', 'false');
-    menu.style.setProperty('--submenu-height', '0px');
-  };
-
-  if (isPortfolioPage) {
-    baseLink.addEventListener('click', (event) => {
-      event.preventDefault();
-      scrollToTop();
-      closeDropdown();
-    });
-  }
-
-  toggle.addEventListener('click', (event) => {
-    event.preventDefault();
-    const isMobile = window.matchMedia('(max-width: 900px)').matches;
-    const isOpen = dropdown.classList.contains('open');
-
-    if (isMobile) {
-      document.querySelectorAll('.nav-dropdown').forEach((item) => {
-        if (item !== dropdown) {
-          item.classList.remove('open');
-          item.querySelector('.nav-dropdown-menu')?.style.setProperty('--submenu-height', '0px');
-          item.querySelector('.nav-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      if (isOpen) {
-        closeDropdown();
-      } else {
-        dropdown.classList.add('open');
-        toggle.setAttribute('aria-expanded', 'true');
-        menu.style.setProperty('--submenu-height', `${menu.scrollHeight}px`);
-      }
-      return;
-    }
-
-    if (isOpen) {
-      closeDropdown();
-    } else {
-      dropdown.classList.add('open');
-      toggle.setAttribute('aria-expanded', 'true');
-    }
-  });
-
-  document.addEventListener('click', (event) => {
-    if (!dropdown.contains(event.target)) {
-      closeDropdown();
-    }
-  });
-}
-
-function scrollToSection(id) {
-  const target = document.getElementById(id) || document.getElementById('hero');
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function initMobileNav() {
@@ -192,7 +94,7 @@ function initMobileNav() {
 }
 
 function setBaseSiteInfo(data, pageContext) {
-  document.title = pageContext === 'portfolio' ? `${data.tab_title} | Portfolio` : data.tab_title;
+  document.title = pageContext === 'my-works' ? `${data.tab_title} | My Works` : data.tab_title;
 
   const uiName = document.getElementById('ui-name');
   if (uiName) uiName.textContent = data.main_title;
@@ -305,7 +207,7 @@ function renderPortfolioCategories(categories) {
   });
 }
 
-function updatePortfolioHero(data) {
+function updateWorksHero(data) {
   const heroTitle = document.getElementById('portfolio-hero-tagline');
   const heroDescription = document.getElementById('portfolio-hero-description');
   const intro = data.portfolio_intro || {};
