@@ -41,10 +41,10 @@ function populateUI(data, pageContext) {
     return;
   }
 
-  const highlightPhotos = data.home_highlights || data.featured_photos || [];
   const recentWorkPhotos = data.home_recent_works || data.home_photos || [];
 
-  renderHeroSection(highlightPhotos);
+  const heroPhoto = data.bio_photo || recentWorkPhotos[0] || '';
+  renderBioHero(heroPhoto);
   renderGallerySection(recentWorkPhotos, 'Recent Works');
 }
 
@@ -121,27 +121,15 @@ function setBaseSiteInfo(data, pageContext) {
   if (linkInsta) linkInsta.href = data.instagram;
 }
 
-function renderHeroSection(photos) {
-  const featuredGrid = document.getElementById('featured-grid');
-  if (!featuredGrid) return;
+function renderBioHero(photoPath) {
+  const heroImg = document.getElementById('bio-hero-photo');
+  if (!heroImg) return;
 
-  if (!photos.length) {
-    featuredGrid.innerHTML = '<p>Nuove foto in arrivo.</p>';
-    return;
+  if (photoPath) {
+    heroImg.src = photoPath;
+  } else {
+    heroImg.style.display = 'none';
   }
-
-  photos.slice(0, 3).forEach((photoPath) => {
-    const item = document.createElement('div');
-    item.className = 'hero-item reveal';
-
-    const img = document.createElement('img');
-    img.src = photoPath;
-    img.alt = 'Foto in evidenza';
-    img.loading = 'eager';
-
-    item.appendChild(img);
-    featuredGrid.appendChild(item);
-  });
 }
 
 function renderGallerySection(photos, label) {

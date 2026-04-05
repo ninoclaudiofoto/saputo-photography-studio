@@ -1,9 +1,5 @@
 const siteGenerated = {
-  "home_highlights": [
-    "assets/img/home/highlights/1.webp",
-    "assets/img/home/highlights/2.webp",
-    "assets/img/home/highlights/3.webp"
-  ],
+  "bio_photo": "assets/img/home/bio/1.jpeg",
   "home_recent_works": [
     "assets/img/home/recent-works/DSCF1025.webp",
     "assets/img/home/recent-works/DSCF1110.webp",

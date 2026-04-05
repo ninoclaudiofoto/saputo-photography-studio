@@ -99,11 +99,24 @@ async function normalizeImage(filePath) {
       .webp({ quality: 80 })
       .toFile(outputPath);
 
-    await fsp.unlink(filePath);
+    await removeFile(filePath);
     return outputPath;
   }
 
   return filePath;
+}
+
+async function removeFile(filePath) {
+  try {
+    await fsp.unlink(filePath);
+  } catch (error) {
+    if (error.code === 'EPERM') {
+      await fsp.chmod(filePath, 0o666);
+      await fsp.unlink(filePath);
+      return;
+    }
+    if (error.code !== 'ENOENT') throw error;
+  }
 }
 
 function replaceExtension(filePath, newExt) {
