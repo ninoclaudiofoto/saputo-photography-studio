@@ -97,6 +97,8 @@ async function normalizeImage(filePath) {
   if (!SUPPORTED_EXTENSIONS.has(ext)) return null;
 
   if (SOURCE_EXTENSIONS.has(ext)) {
+    await clearZoneIdentifier(filePath);
+
     const outputPath = replaceExtension(filePath, '.webp');
     await sharp(filePath)
       .resize({ width: 1920, withoutEnlargement: true, fit: sharp.fit.inside })
@@ -115,6 +117,14 @@ async function removeFile(filePath) {
     await fsp.unlink(filePath);
   } catch (error) {
     if (error.code === 'EPERM') {
+      await delay(150);
+      try {
+        await fsp.unlink(filePath);
+        return;
+      } catch (_) {
+        // continue with chmod retry below
+      }
+
       try {
         await fsp.chmod(filePath, 0o666);
         await fsp.unlink(filePath);
@@ -155,9 +165,25 @@ function toWebPath(absolutePath) {
   return relative.split(path.sep).join('/');
 }
 
+async function clearZoneIdentifier(filePath) {
+  if (process.platform !== 'win32') return;
+  const zonePath = `${filePath}:Zone.Identifier`;
+  try {
+    await fsp.unlink(zonePath);
+  } catch (error) {
+    if (!['ENOENT', 'EINVAL', 'ENOTSUP', 'EPERM'].includes(error.code)) {
+      console.warn(`Avviso: impossibile rimuovere Zone.Identifier per ${filePath}.`, error.message);
+    }
+  }
+}
+
 function relativeFromRoot(targetPath) {
   const relative = path.relative(ROOT_DIR, targetPath);
   return relative || '.';
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function updateDataFile(generatedData) {
