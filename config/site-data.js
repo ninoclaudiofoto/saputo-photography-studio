@@ -30,11 +30,10 @@ const siteGenerated = {
     "assets/img/home/recent-works/DSCF9585.webp",
     "assets/img/home/recent-works/DSCF9848.webp"
   ],
-  "portfolio_categories": [
+  "my_works_sections": [
     {
       "slug": "Adolfo & Laura",
       "title": "Adolfo & Laura",
-      "cover": "assets/img/my-works/Adolfo & Laura/DSCF1025.webp",
       "photos": [
         "assets/img/my-works/Adolfo & Laura/DSCF1025.webp",
         "assets/img/my-works/Adolfo & Laura/DSCF1110.webp",
@@ -56,7 +55,6 @@ const siteGenerated = {
     {
       "slug": "Benedetto & Enrica",
       "title": "Benedetto & Enrica",
-      "cover": "assets/img/my-works/Benedetto & Enrica/DSCF7937.webp",
       "photos": [
         "assets/img/my-works/Benedetto & Enrica/DSCF7937.webp",
         "assets/img/my-works/Benedetto & Enrica/DSCF7984.webp",

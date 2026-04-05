@@ -316,15 +316,6 @@ body.nav-open .nav-overlay {
     grid-row: 2 / 3;
 }
 
-.hero--portfolio {
-    min-height: auto;
-    padding-top: 160px;
-}
-
-.hero--portfolio .hero-grid {
-    grid-template-rows: auto;
-}
-
 .hero-copy {
     grid-column: 1 / -1;
     text-align: center;
@@ -379,7 +370,7 @@ body.nav-open .nav-overlay {
     color: var(--text-primary);
 }
 
-.portfolio-category-header {
+.my-works-section-header {
     text-align: center;
     margin-bottom: var(--spacing-md);
 }

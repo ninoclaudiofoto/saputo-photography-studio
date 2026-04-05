@@ -24,7 +24,7 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
 
     const bioLabel = relativeFromRoot(HOME_BIO_DIR);
     const recentLabel = relativeFromRoot(HOME_RECENT_DIR);
-    const categoriesLabel = relativeFromRoot(MY_WORKS_DIR);
+    const myWorksLabel = relativeFromRoot(MY_WORKS_DIR);
 
     console.log(`>> Ottimizzazione ${bioLabel}`);
     const bioPhotos = await processFlatDirectory(HOME_BIO_DIR);
@@ -35,16 +35,16 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
     const recentWorkPhotos = await processFlatDirectory(HOME_RECENT_DIR);
     console.log(`   -> ${recentWorkPhotos.length} file processati in ${recentLabel}.`);
 
-    console.log(`>> Scansione ${categoriesLabel}`);
-    const portfolioCategories = await buildPortfolioCategories();
-    console.log(`   -> ${portfolioCategories.length} cartelle trovate in ${categoriesLabel}.`);
+    console.log(`>> Scansione ${myWorksLabel}`);
+    const myWorksSections = await buildMyWorksSections();
+    console.log(`   -> ${myWorksSections.length} cartelle trovate in ${myWorksLabel}.`);
 
     await updateDataFile({
       bio_photo: heroPhoto,
       home_recent_works: recentWorkPhotos,
-      portfolio_categories: portfolioCategories
+      my_works_sections: myWorksSections
     });
-    console.log(`✅ Completato! site-data.js aggiornato con ${bioLabel}, ${recentLabel} e ${categoriesLabel}.`);
+    console.log(`✅ Completato! site-data.js aggiornato con ${bioLabel}, ${recentLabel} e ${myWorksLabel}.`);
   } catch (error) {
     console.error('❌ Errore durante l\'ottimizzazione:', error);
     process.exitCode = 1;
@@ -69,7 +69,7 @@ async function processFlatDirectory(dirPath) {
   return files.sort();
 }
 
-async function buildPortfolioCategories() {
+async function buildMyWorksSections() {
   const entries = await safeReadDir(MY_WORKS_DIR);
   const categories = [];
 
@@ -84,7 +84,6 @@ async function buildPortfolioCategories() {
     categories.push({
       slug,
       title: humanize(slug),
-      cover: photoPaths[0],
       photos: photoPaths
     });
   }

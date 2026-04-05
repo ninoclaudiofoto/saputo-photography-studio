@@ -1,14 +1,14 @@
-﻿# Portfolio Antonino Saputo
+﻿# Lavori di Antonino Saputo
 
 Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categorie (`my-works.html`).
 
 ## Modificare i contenuti
 
-- **`config/site-content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti, link social e il blocco `portfolio_intro` (tagline e descrizione della hero di `my-works.html`). Non viene toccato dallo script.
+- **`config/site-content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti e link social. Non viene toccato dallo script.
 - **`config/site-data.js`**: file generato automaticamente da `optimize.js` (non modificarlo a mano). Contiene soltanto i dati dinamici letti dalle cartelle immagini:
   - `bio_photo` -> prima foto trovata in `assets/img/home/bio/` (mostrata nella hero).
   - `home_recent_works` -> immagini in `assets/img/home/recent-works/`.
-  - `portfolio_categories` -> cartelle trovate in `assets/img/my-works/<nome>/`.
+  - `my_works_sections` -> cartelle trovate in `assets/img/my-works/<nome>/`.
 
 Ricorda di commitare `config/site-data.js` dopo ogni modifica o esecuzione dello script di ottimizzazione.
 
@@ -27,12 +27,12 @@ Ricorda di commitare `config/site-data.js` dopo ogni modifica o esecuzione dello
 1. Copia le nuove foto (JPG/PNG) nella cartella corretta (`home/bio`, `home/recent-works` o `my-works/<categoria>/`). Se la cartella non esiste, creala.
 2. Esegui `node optimize.js` dalla root del progetto:
    - converte le immagini in WebP sovrascrivendole direttamente nella stessa cartella;
-   - aggiorna automaticamente `config/site-data.js` con `bio_photo`, `home_recent_works` e `portfolio_categories`.
+   - aggiorna automaticamente `config/site-data.js` con `bio_photo`, `home_recent_works` e `my_works_sections`.
 3. Verifica il risultato (preview locale o GitHub Pages), poi effettua commit e push.
 
 > **Nota**: se preferisci caricare solo WebP gia' ottimizzate, puoi inserirle direttamente nelle cartelle. Mantieni pero' la convenzione di rilanciare `node optimize.js` cosi' da ricostruire i dati (il file `config/site-data.js` verra' aggiornato con i nuovi percorsi).
 
-Le modifiche puramente testuali (nome, contatti, hero del portfolio) si applicano semplicemente salvando `config/site-content.js`: non serve rilanciare lo script.
+Le modifiche puramente testuali (nome, contatti, titoli) si applicano semplicemente salvando `config/site-content.js`: non serve rilanciare lo script.
 
 ---
 

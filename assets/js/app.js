@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initLightboxEvents();
   } else {
     console.error('Errore: dati non trovati');
-    const galleryRoot = document.getElementById('gallery-grid') || document.getElementById('portfolio-categories');
+    const galleryRoot = document.getElementById('gallery-grid') || document.getElementById('my-works-sections');
     if (galleryRoot) {
-      galleryRoot.innerHTML = '<p>Si è verificato un errore nel caricamento del portfolio.</p>';
+      galleryRoot.innerHTML = '<p>Si è verificato un errore nel caricamento.</p>';
     }
   }
 });
@@ -36,8 +36,7 @@ function populateUI(data, pageContext) {
   setBaseSiteInfo(data, pageContext);
 
   if (pageContext === 'my-works') {
-    updateWorksHero(data);
-    renderPortfolioCategories(data.portfolio_categories || []);
+    renderMyWorksSections(data.my_works_sections || []);
     return;
   }
 
@@ -144,15 +143,15 @@ function renderGallerySection(photos, label) {
   }
 
   photos.forEach((photoPath, index) => {
-    const alt = label ? `${label} ${index + 1}` : `Fotografia portfolio ${index + 1}`;
+    const alt = label ? `${label} ${index + 1}` : `Fotografia ${index + 1}`;
     const item = createGalleryItem(photoPath, alt, photos, index);
     galleryGrid.appendChild(item);
   });
   initCarousel(galleryGrid);
 }
 
-function renderPortfolioCategories(categories) {
-  const container = document.getElementById('portfolio-categories');
+function renderMyWorksSections(categories) {
+  const container = document.getElementById('my-works-sections');
   if (!container) return;
   container.innerHTML = '';
 
@@ -170,7 +169,7 @@ function renderPortfolioCategories(categories) {
     inner.className = 'container';
 
     const header = document.createElement('div');
-    header.className = 'portfolio-category-header';
+    header.className = 'my-works-section-header';
 
     const title = document.createElement('h2');
     title.className = 'section-title';
@@ -196,20 +195,6 @@ function renderPortfolioCategories(categories) {
     initCarousel(grid);
     container.appendChild(section);
   });
-}
-
-function updateWorksHero(data) {
-  const heroTitle = document.getElementById('portfolio-hero-tagline');
-  const heroDescription = document.getElementById('portfolio-hero-description');
-  const intro = data.portfolio_intro || {};
-
-  if (heroTitle && intro.tagline) {
-    heroTitle.textContent = intro.tagline;
-  }
-
-  if (heroDescription && intro.description) {
-    heroDescription.textContent = intro.description;
-  }
 }
 
 function createGalleryItem(photoPath, altText, photoCollection, index) {
