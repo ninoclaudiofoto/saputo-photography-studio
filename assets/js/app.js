@@ -154,7 +154,7 @@ function renderPortfolioCategories(categories) {
   container.innerHTML = '';
 
   if (!categories.length) {
-    container.innerHTML = '<p>Non sono state trovate categorie. Aggiungi nuove cartelle in assets/img/categories e rilancia lo script di ottimizzazione.</p>';
+    container.innerHTML = '<p>Non sono state trovate categorie. Aggiungi nuove cartelle in assets/img/my-works e rilancia lo script di ottimizzazione.</p>';
     return;
   }
 
@@ -318,3 +318,4 @@ function initLightboxEvents() {
     if (event.key === 'ArrowRight') changeLightboxImage(1);
   });
 }
+

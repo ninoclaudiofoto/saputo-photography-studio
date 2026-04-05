@@ -7,7 +7,7 @@ const ROOT_DIR = __dirname;
 const HOME_DIR = path.join(ROOT_DIR, 'assets', 'img', 'home');
 const HOME_BIO_DIR = path.join(HOME_DIR, 'bio');
 const HOME_RECENT_DIR = path.join(HOME_DIR, 'recent-works');
-const CATEGORIES_DIR = path.join(ROOT_DIR, 'assets', 'img', 'categories');
+const MY_WORKS_DIR = path.join(ROOT_DIR, 'assets', 'img', 'my-works');
 const DATA_FILE = path.join(ROOT_DIR, 'config', 'site-data.js');
 
 const SOURCE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png']);
@@ -19,28 +19,32 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
       ensureDirectory(HOME_DIR),
       ensureDirectory(HOME_BIO_DIR),
       ensureDirectory(HOME_RECENT_DIR),
-      ensureDirectory(CATEGORIES_DIR)
+      ensureDirectory(MY_WORKS_DIR)
     ]);
 
-    console.log('>> Ottimizzazione home/bio');
+    const bioLabel = relativeFromRoot(HOME_BIO_DIR);
+    const recentLabel = relativeFromRoot(HOME_RECENT_DIR);
+    const categoriesLabel = relativeFromRoot(MY_WORKS_DIR);
+
+    console.log(`>> Ottimizzazione ${bioLabel}`);
     const bioPhotos = await processFlatDirectory(HOME_BIO_DIR);
     const heroPhoto = bioPhotos[0] || null;
-    console.log(`   -> ${bioPhotos.length} foto trovate per la bio.`);
+    console.log(`   -> ${bioPhotos.length} file processati in ${bioLabel}.`);
 
-    console.log('>> Ottimizzazione home/recent-works');
+    console.log(`>> Ottimizzazione ${recentLabel}`);
     const recentWorkPhotos = await processFlatDirectory(HOME_RECENT_DIR);
-    console.log(`   -> ${recentWorkPhotos.length} foto Recent Works.`);
+    console.log(`   -> ${recentWorkPhotos.length} file processati in ${recentLabel}.`);
 
-    console.log('>> Scansione categorie portfolio');
+    console.log(`>> Scansione ${categoriesLabel}`);
     const portfolioCategories = await buildPortfolioCategories();
-    console.log(`   -> ${portfolioCategories.length} categorie aggiornate.`);
+    console.log(`   -> ${portfolioCategories.length} cartelle trovate in ${categoriesLabel}.`);
 
     await updateDataFile({
       bio_photo: heroPhoto,
       home_recent_works: recentWorkPhotos,
       portfolio_categories: portfolioCategories
     });
-    console.log('✅ Completato! data.js aggiornato con bio, recent works e categorie.');
+    console.log(`✅ Completato! site-data.js aggiornato con ${bioLabel}, ${recentLabel} e ${categoriesLabel}.`);
   } catch (error) {
     console.error('❌ Errore durante l\'ottimizzazione:', error);
     process.exitCode = 1;
@@ -66,13 +70,13 @@ async function processFlatDirectory(dirPath) {
 }
 
 async function buildPortfolioCategories() {
-  const entries = await safeReadDir(CATEGORIES_DIR);
+  const entries = await safeReadDir(MY_WORKS_DIR);
   const categories = [];
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
     const slug = entry.name;
-    const categoryDir = path.join(CATEGORIES_DIR, slug);
+    const categoryDir = path.join(MY_WORKS_DIR, slug);
     const photoPaths = await processFlatDirectory(categoryDir);
 
     if (photoPaths.length === 0) continue;
@@ -149,6 +153,11 @@ function humanize(slug) {
 function toWebPath(absolutePath) {
   const relative = path.relative(ROOT_DIR, absolutePath);
   return relative.split(path.sep).join('/');
+}
+
+function relativeFromRoot(targetPath) {
+  const relative = path.relative(ROOT_DIR, targetPath);
+  return relative || '.';
 }
 
 async function updateDataFile(generatedData) {
