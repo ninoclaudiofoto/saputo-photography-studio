@@ -38,7 +38,7 @@ Le modifiche puramente testuali (nome, contatti, hero del portfolio) si applican
 
 ## Script rapido
 
-- **Windows**: esegui `run-optimize.bat`. Lo script controlla che `node` sia disponibile, lancia `node optimize.js` e, se va a buon fine, esegue automaticamente `git add -A`, `git commit` (messaggio fisso `chore: update media`) e `git push` senza chiedere conferme.
+- **Windows**: esegui `run-optimize.bat`. Lo script controlla che `node` sia disponibile, lancia `node optimize.js` e, se va a buon fine, ti chiede se vuoi procedere con `git add -A`, `git commit` (messaggio fisso `chore: update media`) e `git push`.
 - **macOS / Linux**: apri il terminale nella root del progetto ed esegui manualmente `node optimize.js` (serve avere Node.js installato).
 
 Installa sempre una versione LTS di Node.js da [nodejs.org](https://nodejs.org/) o tramite il package manager della tua distribuzione prima di lanciare questi comandi.

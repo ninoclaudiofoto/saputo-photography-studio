@@ -17,7 +17,7 @@ if errorlevel 1 (
 
 echo.
 echo [OK] optimize.js completato con successo.
-call :git_push
+call :maybe_git_push
 
 :done
 echo.
@@ -34,6 +34,16 @@ where node >NUL 2>&1 || (
     exit /b 1
 )
 echo Node.js trovato.
+exit /b 0
+
+:maybe_git_push
+set "response="
+set /p "response=Vuoi eseguire git add/commit/push? (y/N): "
+if /I not "%response%"=="y" (
+    echo Operazione git ignorata.
+    exit /b 0
+)
+call :git_push
 exit /b 0
 
 :git_push
