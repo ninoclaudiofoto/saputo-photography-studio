@@ -1,7 +1,6 @@
 const siteGenerated = {
   "bio_photo": "assets/img/home/bio/1.webp",
   "home_recent_works": [
-    "assets/img/home/recent-works/1.webp",
     "assets/img/home/recent-works/DSCF1025.webp",
     "assets/img/home/recent-works/DSCF1110.webp",
     "assets/img/home/recent-works/DSCF1132.webp",
