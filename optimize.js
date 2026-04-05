@@ -5,7 +5,7 @@ const sharp = require('sharp');
 
 const ROOT_DIR = __dirname;
 const HOME_DIR = path.join(ROOT_DIR, 'assets', 'img', 'home');
-const HOME_HIGHLIGHTS_DIR = path.join(HOME_DIR, 'highlights');
+const HOME_BIO_DIR = path.join(HOME_DIR, 'bio');
 const HOME_RECENT_DIR = path.join(HOME_DIR, 'recent-works');
 const CATEGORIES_DIR = path.join(ROOT_DIR, 'assets', 'img', 'categories');
 const DATA_FILE = path.join(ROOT_DIR, 'config', 'site-data.js');
@@ -17,14 +17,15 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
   try {
     await Promise.all([
       ensureDirectory(HOME_DIR),
-      ensureDirectory(HOME_HIGHLIGHTS_DIR),
+      ensureDirectory(HOME_BIO_DIR),
       ensureDirectory(HOME_RECENT_DIR),
       ensureDirectory(CATEGORIES_DIR)
     ]);
 
-    console.log('>> Ottimizzazione home/highlights');
-    const highlightPhotos = await processFlatDirectory(HOME_HIGHLIGHTS_DIR);
-    console.log(`   -> ${highlightPhotos.length} foto per la hero.`);
+    console.log('>> Ottimizzazione home/bio');
+    const bioPhotos = await processFlatDirectory(HOME_BIO_DIR);
+    const heroPhoto = bioPhotos[0] || null;
+    console.log(`   -> ${bioPhotos.length} foto trovate per la bio.`);
 
     console.log('>> Ottimizzazione home/recent-works');
     const recentWorkPhotos = await processFlatDirectory(HOME_RECENT_DIR);
@@ -35,11 +36,11 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
     console.log(`   -> ${portfolioCategories.length} categorie aggiornate.`);
 
     await updateDataFile({
-      home_highlights: highlightPhotos,
+      bio_photo: heroPhoto,
       home_recent_works: recentWorkPhotos,
       portfolio_categories: portfolioCategories
     });
-    console.log('✅ Completato! data.js aggiornato con highlights, recent works e categorie.');
+    console.log('✅ Completato! data.js aggiornato con bio, recent works e categorie.');
   } catch (error) {
     console.error('❌ Errore durante l\'ottimizzazione:', error);
     process.exitCode = 1;
