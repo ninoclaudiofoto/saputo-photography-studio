@@ -341,7 +341,7 @@ body.nav-open .nav-overlay {
 .hero--bio {
     min-height: auto;
     padding-top: 140px;
-    padding-bottom: 80px;
+    padding-bottom: 140px;
 }
 
 .hero-bio {
@@ -387,6 +387,17 @@ body.nav-open .nav-overlay {
 /* Gallery Section (Masonry) */
 .gallery-section {
     padding: var(--spacing-xl) 0;
+}
+
+.gallery-section--compact {
+    padding-top: 2rem;
+}
+
+.section-subtitle--highlight {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.4rem;
+    margin-bottom: 2rem;
 }
 
 .masonry-grid {
