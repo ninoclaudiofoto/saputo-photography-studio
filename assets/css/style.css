@@ -895,4 +895,9 @@ body.nav-open .nav-overlay {
         right: 20px;
         font-size: 30px;
     }
+
+    /* even tighter spacing below the carousel when stacked on contact section */
+    .gallery-section {
+        padding-bottom: var(--spacing-sm);
+    }
 }
