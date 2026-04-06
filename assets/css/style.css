@@ -801,6 +801,7 @@ body.nav-open .nav-overlay {
         display: flex;
         gap: 1rem;
         overflow-x: auto;
+        overflow-y: hidden;
         scroll-snap-type: x mandatory;
         touch-action: pan-x pinch-zoom;
         overscroll-behavior-x: contain;
