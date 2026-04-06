@@ -802,6 +802,9 @@ body.nav-open .nav-overlay {
         gap: 1rem;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
+        touch-action: pan-x pinch-zoom;
+        overscroll-behavior-x: contain;
+        overscroll-behavior-y: auto;
         -ms-overflow-style: none;
         scrollbar-width: none;
         column-count: initial;
@@ -814,6 +817,7 @@ body.nav-open .nav-overlay {
     .carousel-track .gallery-item {
         flex: 0 0 82vw;
         scroll-snap-align: center;
+        scroll-snap-stop: always;
         margin-bottom: 0;
     }
 

@@ -239,7 +239,19 @@ function createCarouselButton(direction) {
 }
 
 function scrollCarousel(track, direction) {
-  const amount = track.clientWidth * 0.85 || 320;
+  if (!track) return;
+
+  let amount = track.clientWidth * 0.85 || 320;
+  const firstItem = track.querySelector('.gallery-item');
+
+  if (firstItem) {
+    const itemRect = firstItem.getBoundingClientRect();
+    const styles = window.getComputedStyle(track);
+    const rawGap = styles.columnGap || styles.gap || '0';
+    const gapValue = parseFloat(rawGap) || 0;
+    amount = itemRect.width + gapValue;
+  }
+
   track.scrollBy({
     left: amount * direction,
     behavior: 'smooth'
