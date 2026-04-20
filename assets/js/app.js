@@ -25,9 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initLightboxEvents();
   } else {
     console.error('Errore: dati non trovati');
-    const galleryRoot = document.getElementById('gallery-grid') || document.getElementById('my-works-sections');
-    if (galleryRoot) {
-      galleryRoot.innerHTML = '<p>Si è verificato un errore nel caricamento.</p>';
+    const galleryRoots = ['gallery-grid', 'love-stories-sections', 'authentic-portraits-sections', 'projects-sections'];
+    for (const id of galleryRoots) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.innerHTML = '<p>Si è verificato un errore nel caricamento.</p>';
+      }
     }
   }
 });
@@ -35,8 +38,16 @@ document.addEventListener('DOMContentLoaded', () => {
 function populateUI(data, pageContext) {
   setBaseSiteInfo(data, pageContext);
 
-  if (pageContext === 'my-works') {
-    renderMyWorksSections(data.my_works_sections || []);
+  if (pageContext === 'love-stories') {
+    renderSections('love-stories-sections', data.love_stories_sections || [], 'love-stories');
+    return;
+  }
+  if (pageContext === 'authentic-portraits') {
+    renderSections('authentic-portraits-sections', data.authentic_portraits_sections || [], 'authentic-portraits');
+    return;
+  }
+  if (pageContext === 'projects') {
+    renderSections('projects-sections', data.projects_sections || [], 'projects');
     return;
   }
 
@@ -93,7 +104,13 @@ function initMobileNav() {
 }
 
 function setBaseSiteInfo(data, pageContext) {
-  document.title = pageContext === 'my-works' ? `${data.tab_title} | My Works` : data.tab_title;
+  const titleSuffixMap = {
+    'love-stories': 'Storie d\'amore',
+    'authentic-portraits': 'Ritratti autentici',
+    'projects': 'Progetti'
+  };
+  const suffix = titleSuffixMap[pageContext];
+  document.title = suffix ? `${data.tab_title} | ${suffix}` : data.tab_title;
 
   const uiName = document.getElementById('ui-name');
   if (uiName) uiName.textContent = data.main_title;
@@ -150,13 +167,13 @@ function renderGallerySection(photos, label) {
   initCarousel(galleryGrid);
 }
 
-function renderMyWorksSections(categories) {
-  const container = document.getElementById('my-works-sections');
+function renderSections(containerId, categories, folderName) {
+  const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = '';
 
   if (!categories.length) {
-    container.innerHTML = '<p>Non sono state trovate categorie. Aggiungi nuove cartelle in assets/img/my-works e rilancia lo script di ottimizzazione.</p>';
+    container.innerHTML = `<p>Non sono state trovate categorie. Aggiungi nuove cartelle in assets/img/${folderName} e rilancia lo script di ottimizzazione.</p>`;
     return;
   }
 

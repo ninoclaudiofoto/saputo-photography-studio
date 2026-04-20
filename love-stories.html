@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Storie d'amore di Antonino Saputo - Esplora raccolte tematiche di eventi e matrimoni.">
+    <title>Antonino Saputo | Storie d'amore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+            rel="stylesheet">
+    </noscript>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body data-page="love-stories">
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html#hero" class="logo" id="ui-name">Antonino Saputo | Fotografo</a>
+            <button class="nav-toggle" aria-label="Apri il menu" aria-expanded="false">
+                <span class="nav-toggle-icon">
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html#hero">Home</a></li>
+                    <li><a href="love-stories.html" aria-current="page">Storie d'amore</a></li>
+                    <li><a href="authentic-portraits.html">Ritratti autentici</a></li>
+                    <li><a href="projects.html">Progetti</a></li>
+                    <li><a href="#contact">Contatti</a></li>
+                </ul>
+            </nav>
+            <div class="nav-overlay" aria-hidden="true"></div>
+        </div>
+    </header>
+
+    <main>
+        <div id="love-stories-sections">
+            <section class="gallery-section">
+                <div class="container">
+                    <p class="section-subtitle">Caricamento delle categorie in corso...</p>
+                </div>
+            </section>
+        </div>
+
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <h2 class="section-title">Scrivimi per fissare un appuntamento.</h2>
+                    <div class="contact-info" style="margin-bottom: 2rem; font-size: 1.1rem;">
+                        <p style="margin-bottom: 0.5rem;"><strong style="font-weight:600;">Email:</strong> <a href="#"
+                                id="text-email"></a></p>
+                        <p><strong style="font-weight:600;">Telefono:</strong> <a href="#" id="text-phone"></a></p>
+                    </div>
+
+                    <div class="contact-buttons">
+                        <a href="#" class="btn btn-primary" id="btn-mail">
+                            <span class="icon">&#9993;</span> Scrivimi una Mail
+                        </a>
+                        <a href="#" class="btn btn-whatsapp" id="btn-whatsapp">
+                            <span class="icon">&#128172;</span> Messaggio WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; <span id="current-year"></span> Antonino Saputo. Tutti i diritti riservati.</p>
+            <div class="social-links">
+                <a href="#" id="link-instagram" target="_blank" rel="noopener noreferrer"
+                    style="display:inline-flex; align-items:center; gap:6px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="url(#ig-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <defs>
+                            <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#f09433" />
+                                <stop offset="25%" stop-color="#e6683c" />
+                                <stop offset="50%" stop-color="#dc2743" />
+                                <stop offset="75%" stop-color="#cc2366" />
+                                <stop offset="100%" stop-color="#bc1888" />
+                            </linearGradient>
+                        </defs>
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    Instagram
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <button class="lightbox-prev" aria-label="Foto precedente">&#10094;</button>
+        <button class="lightbox-next" aria-label="Foto successiva">&#10095;</button>
+        <img class="lightbox-content" id="lightbox-img" alt="Immagine ingrandita">
+    </div>
+
+    <script src="config/site-content.js"></script>
+    <script src="config/site-data.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

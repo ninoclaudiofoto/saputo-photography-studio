@@ -7,7 +7,9 @@ const ROOT_DIR = __dirname;
 const HOME_DIR = path.join(ROOT_DIR, 'assets', 'img', 'home');
 const HOME_BIO_DIR = path.join(HOME_DIR, 'bio');
 const HOME_RECENT_DIR = path.join(HOME_DIR, 'recent-works');
-const MY_WORKS_DIR = path.join(ROOT_DIR, 'assets', 'img', 'my-works');
+const LOVE_STORIES_DIR = path.join(ROOT_DIR, 'assets', 'img', 'love-stories');
+const AUTHENTIC_PORTRAITS_DIR = path.join(ROOT_DIR, 'assets', 'img', 'authentic-portraits');
+const PROJECTS_DIR = path.join(ROOT_DIR, 'assets', 'img', 'projects');
 const DATA_FILE = path.join(ROOT_DIR, 'config', 'site-data.js');
 
 const SOURCE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png']);
@@ -19,12 +21,13 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
       ensureDirectory(HOME_DIR),
       ensureDirectory(HOME_BIO_DIR),
       ensureDirectory(HOME_RECENT_DIR),
-      ensureDirectory(MY_WORKS_DIR)
+      ensureDirectory(LOVE_STORIES_DIR),
+      ensureDirectory(AUTHENTIC_PORTRAITS_DIR),
+      ensureDirectory(PROJECTS_DIR)
     ]);
 
     const bioLabel = relativeFromRoot(HOME_BIO_DIR);
     const recentLabel = relativeFromRoot(HOME_RECENT_DIR);
-    const myWorksLabel = relativeFromRoot(MY_WORKS_DIR);
 
     console.log(`>> Ottimizzazione ${bioLabel}`);
     const bioPhotos = await processFlatDirectory(HOME_BIO_DIR);
@@ -35,16 +38,23 @@ const SUPPORTED_EXTENSIONS = new Set([...SOURCE_EXTENSIONS, '.webp']);
     const recentWorkPhotos = await processFlatDirectory(HOME_RECENT_DIR);
     console.log(`   -> ${recentWorkPhotos.length} file processati in ${recentLabel}.`);
 
-    console.log(`>> Scansione ${myWorksLabel}`);
-    const myWorksSections = await buildMyWorksSections();
-    console.log(`   -> ${myWorksSections.length} cartelle trovate in ${myWorksLabel}.`);
+    console.log(`>> Scansione Love Stories`);
+    const loveStoriesSections = await buildSections(LOVE_STORIES_DIR);
+    
+    console.log(`>> Scansione Authentic Portraits`);
+    const authenticPortraitsSections = await buildSections(AUTHENTIC_PORTRAITS_DIR);
+
+    console.log(`>> Scansione Projects`);
+    const projectsSections = await buildSections(PROJECTS_DIR);
 
     await updateDataFile({
       bio_photo: heroPhoto,
       home_recent_works: recentWorkPhotos,
-      my_works_sections: myWorksSections
+      love_stories_sections: loveStoriesSections,
+      authentic_portraits_sections: authenticPortraitsSections,
+      projects_sections: projectsSections
     });
-    console.log(`✅ Completato! site-data.js aggiornato con ${bioLabel}, ${recentLabel} e ${myWorksLabel}.`);
+    console.log(`✅ Completato! site-data.js aggiornato.`);
   } catch (error) {
     console.error('❌ Errore durante l\'ottimizzazione:', error);
     process.exitCode = 1;
@@ -69,14 +79,14 @@ async function processFlatDirectory(dirPath) {
   return files.sort();
 }
 
-async function buildMyWorksSections() {
-  const entries = await safeReadDir(MY_WORKS_DIR);
+async function buildSections(baseDir) {
+  const entries = await safeReadDir(baseDir);
   const categories = [];
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
     const slug = entry.name;
-    const categoryDir = path.join(MY_WORKS_DIR, slug);
+    const categoryDir = path.join(baseDir, slug);
     const photoPaths = await processFlatDirectory(categoryDir);
 
     if (photoPaths.length === 0) continue;
