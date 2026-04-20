@@ -1,4 +1,5 @@
 @echo off
+color 0b
 setlocal ENABLEDELAYEDEXPANSION
 
 set "PROJECT_DIR=%~dp0"

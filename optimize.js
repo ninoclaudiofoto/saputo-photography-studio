@@ -121,30 +121,24 @@ async function normalizeImage(filePath) {
   return filePath;
 }
 
-async function removeFile(filePath) {
-  try {
-    await fsp.unlink(filePath);
-  } catch (error) {
-    if (error.code === 'EPERM') {
-      await delay(150);
-      try {
-        await fsp.unlink(filePath);
+async function removeFile(filePath, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await fsp.unlink(filePath);
+      return;
+    } catch (error) {
+      if (error.code === 'ENOENT') return;
+      
+      if (i === retries - 1) {
+        console.warn(`Attenzione: impossibile eliminare ${filePath}. Proseguo lasciando il file originale.`, error.message);
         return;
-      } catch (_) {
-        // continue with chmod retry below
       }
-
+      
       try {
         await fsp.chmod(filePath, 0o666);
-        await fsp.unlink(filePath);
-        return;
-      } catch (retryError) {
-        console.warn(`Attenzione: impossibile eliminare ${filePath}. Proseguo lasciando il file originale.`, retryError.message);
-        return;
-      }
-    }
-    if (error.code !== 'ENOENT') {
-      console.warn(`Attenzione: impossibile eliminare ${filePath}. Proseguo lasciando il file originale.`, error.message);
+      } catch (e) {}
+      
+      await delay(500); // attendi 500ms per dare tempo a Windows di sbloccare il file
     }
   }
 }
