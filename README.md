@@ -1,52 +1,42 @@
-﻿# Lavori di Antonino Saputo
+# Lavori di Antonino Saputo
 
-Sito web vetrina di Antonino Saputo con homepage (`index.html`) e pagina categorie (`my-works.html`).
+Sito web vetrina per la fotografia di Antonino Saputo. Il progetto si compone di una homepage (`index.html`) e tre gallerie specifiche tematiche:
+- `love-stories.html` (Storie d'amore)
+- `authentic-portraits.html` (Ritratti autentici)
+- `projects.html` (Progetti)
 
-## Modificare i contenuti
+## Modificare i contenuti testuali
 
-- **`config/site-content.js`**: file manuale. Qui puoi aggiornare nome, titoli SEO, contatti e link social. Non viene toccato dallo script.
-- **`config/site-data.js`**: file generato automaticamente da `optimize.js` (non modificarlo a mano). Contiene soltanto i dati dinamici letti dalle cartelle immagini:
-  - `bio_photo` -> prima foto trovata in `assets/img/home/bio/` (mostrata nella hero).
-  - `home_recent_works` -> immagini in `assets/img/home/recent-works/`.
-  - `my_works_sections` -> cartelle trovate in `assets/img/my-works/<nome>/`.
-
-Ricorda di commitare `config/site-data.js` dopo ogni modifica o esecuzione dello script di ottimizzazione.
+- **`config/site-content.js`**: File manuale. Modifica qui contatti (telefono, mail, whatsapp), SEO e link social (es. Instagram).
+- **`config/site-data.js`**: **NON modificarlo a mano**. È il file autogenerato dallo script di ottimizzazione che mappa tutte le foti presenti nel sito.
 
 ---
 
-## Struttura immagini
+## Architettura e Immagini
 
-- `assets/img/home/bio/`: inserisci qui uno o piu' ritratti. Verra' mostrata automaticamente la prima foto (in ordine alfabetico) come immagine della hero.
-- `assets/img/home/recent-works/`: tutte le foto mostrate nella sezione "Recent Works".
-- `assets/img/my-works/<nome-categoria>/`: raccolte tematiche mostrate su `my-works.html` (es: `matrimoni`, `ritratti`, ...). Ogni cartella diventa una sezione autonoma.
+Ogni sezione del sito carica dinamicamente le foto scansionando delle specifiche cartelle.
+
+- `assets/img/home/bio/`: La tua foto ritratto usata nella Homepage. Il sistema sceglierà la prima in ordine alfabetico.
+- `assets/img/home/recent-works/`: Tutte le tue foto "Recent Works" per la Homepage.
+- `assets/img/love-stories/`: Raggruppate in sottocartelle (es. "Marco e Giada", "Anna e Luigi") per la sezione Storie d'Amore.
+- `assets/img/authentic-portraits/`: Raggruppate in sottocartelle per la sezione Ritratti.
+- `assets/img/projects/`: Raggruppate in sottocartelle per la sezione Progetti.
 
 ---
 
 ## Workflow consigliato per nuove foto
 
-1. Copia le nuove foto (JPG/PNG) nella cartella corretta (`home/bio`, `home/recent-works` o `my-works/<categoria>/`). Se la cartella non esiste, creala.
-2. Esegui `node optimize.js` dalla root del progetto:
-   - converte le immagini in WebP sovrascrivendole direttamente nella stessa cartella;
-   - aggiorna automaticamente `config/site-data.js` con `bio_photo`, `home_recent_works` e `my_works_sections`.
-3. Verifica il risultato (preview locale o GitHub Pages), poi effettua commit e push.
-
-> **Nota**: se preferisci caricare solo WebP gia' ottimizzate, puoi inserirle direttamente nelle cartelle. Mantieni pero' la convenzione di rilanciare `node optimize.js` cosi' da ricostruire i dati (il file `config/site-data.js` verra' aggiornato con i nuovi percorsi).
-
-Le modifiche puramente testuali (nome, contatti, titoli) si applicano semplicemente salvando `config/site-content.js`: non serve rilanciare lo script.
+1. **Aggiungi le foto:** Copia le tue nuove foto (in formato JPG/PNG) nelle rispettive cartelle. (Crea la cartella principale o la sotto-galleria se non esiste).
+2. **Ottimizzazione WebP:**
+    - Doppio click su `run-optimize.bat` se ti trovi su Windows.
+    - Se invece usi terminali classici, lancia semplicemente `node optimize.js`.
+3. Lo script in automatico scansionerà le directory, ridimensionerà e convertirà le foto in `WebP` andando ad eliminare le copie originali troppo pesanti, e infine salverà su `config/site-data.js` la mappa aggiornata del sito.
 
 ---
 
-## Script rapido
+## Script Rapidi (Windows)
 
-- **Windows**: esegui `run-optimize.bat`. Lo script controlla che `node` sia disponibile, lancia `node optimize.js` e, se va a buon fine, ti chiede se vuoi procedere con `git add -A`, `git commit` (messaggio fisso `chore: update media`) e `git push`.
-- **macOS / Linux**: apri il terminale nella root del progetto ed esegui manualmente `node optimize.js` (serve avere Node.js installato).
+- **`run-optimize.bat`**: Avvia l'ottimizzazione automatica delle immagini e rigenera i dati del sito. Se l'operazione va a buon fine, ti scriverà i file `WebP` pronti. Successivamente alla generazione, il prompt ti domanderà se desideri effettuare e lanciare automaticamente la commit per mandare subito il sito online!
+- **`run-pull.bat`**: Avvia lo scaricamento (`git pull`) delle ultime modifiche (incluse queste istruzioni e gli aggiornamenti del codice sorgente dal server).
 
-Installa sempre una versione LTS di Node.js da [nodejs.org](https://nodejs.org/) o tramite il package manager della tua distribuzione prima di lanciare questi comandi.
-
----
-
-## Navigazione
-
-- La homepage ora apre con un ritratto + bio estesa seguiti dalla sezione "Recent Works" e rimanda, dal menu, alla pagina "I miei lavori".
-- `my-works.html` costruisce dinamicamente una sezione per ogni cartella trovata in `assets/img/my-works/`.
-- Entrambe le pagine condividono lo stesso header/nav e la stessa sezione contatti (aggiornata tramite `data.js`).
+*In entrambi i casi accertati di avere [Node.js](https://nodejs.org/it) sempre installato e funzionante.*
