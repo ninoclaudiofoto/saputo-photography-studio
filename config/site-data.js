@@ -56,10 +56,10 @@ const siteGenerated = {
       "slug": "Benedetto & Enrica",
       "title": "Benedetto & Enrica",
       "photos": [
+        "assets/img/love-stories/Benedetto & Enrica/1.webp",
         "assets/img/love-stories/Benedetto & Enrica/DSCF7937.webp",
         "assets/img/love-stories/Benedetto & Enrica/DSCF7984.webp",
         "assets/img/love-stories/Benedetto & Enrica/DSCF8018.webp",
-        "assets/img/love-stories/Benedetto & Enrica/DSCF8300.webp",
         "assets/img/love-stories/Benedetto & Enrica/DSCF8304.webp",
         "assets/img/love-stories/Benedetto & Enrica/DSCF8399.webp",
         "assets/img/love-stories/Benedetto & Enrica/DSCF8934.webp",
