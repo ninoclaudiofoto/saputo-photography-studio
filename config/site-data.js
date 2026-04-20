@@ -77,10 +77,10 @@ const siteGenerated = {
       "slug": "Ritratti Autentici",
       "title": "Ritratti Autentici",
       "photos": [
+        "assets/img/authentic-portraits/Ritratti Autentici/DSF2648.webp",
+        "assets/img/authentic-portraits/Ritratti Autentici/DSF4564.webp",
         "assets/img/authentic-portraits/Ritratti Autentici/IMG_20201112_191655_694.webp",
-        "assets/img/authentic-portraits/Ritratti Autentici/IMG_20210520_185702_013.webp",
-        "assets/img/authentic-portraits/Ritratti Autentici/_DSF2648.webp",
-        "assets/img/authentic-portraits/Ritratti Autentici/_DSF4564.webp"
+        "assets/img/authentic-portraits/Ritratti Autentici/IMG_20210520_185702_013.webp"
       ]
     }
   ],
