@@ -86,13 +86,13 @@ const siteGenerated = {
   ],
   "projects_sections": [
     {
-      "slug": "temp",
-      "title": "Temp",
+      "slug": "Be Spoke",
+      "title": "Be Spoke",
       "photos": [
-        "assets/img/projects/temp/DSCF1337.webp",
-        "assets/img/projects/temp/DSCF1352.webp",
-        "assets/img/projects/temp/DSCF7571.webp",
-        "assets/img/projects/temp/DSCF7572.webp"
+        "assets/img/projects/Be Spoke/DSCF1337.webp",
+        "assets/img/projects/Be Spoke/DSCF1352.webp",
+        "assets/img/projects/Be Spoke/DSCF7571.webp",
+        "assets/img/projects/Be Spoke/DSCF7572.webp"
       ]
     }
   ]
